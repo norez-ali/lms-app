@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="../../../unpkg.com/leaflet%401.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
         crossorigin="" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.jpg') }}">
+
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ asset('assets/css/vendors.css') }}">
@@ -51,7 +53,7 @@
 
                             <div class="header__logo ">
                                 <a data-barba href="index.html">
-                                    <img src="img/general/logo.svg" alt="logo">
+                                    <img src="{{ asset('assets/img/general/logo.svg') }}" alt="logo">
                                 </a>
                             </div>
 
@@ -946,7 +948,8 @@
                                                     <button
                                                         class="d-flex items-center justify-center size-40 rounded-full bg-purple-3"
                                                         data-el-toggle=".js-search-toggle">
-                                                        <img src="img/menus/close.svg" alt="icon">
+                                                        <img src="{{ asset('assets/img/menus/close.svg') }}"
+                                                            alt="icon">
                                                     </button>
                                                 </div>
 
@@ -993,7 +996,8 @@
                                                     <div class="col">
                                                         <div class="row x-gap-10 y-gap-10">
                                                             <div class="col-auto">
-                                                                <img src="img/menus/cart/1.png" alt="image">
+                                                                <img src="{{ asset('assets/img/menus/cart/1.png') }}"
+                                                                    alt="image">
                                                             </div>
 
                                                             <div class="col">
@@ -1012,7 +1016,7 @@
                                                     </div>
 
                                                     <div class="col-auto">
-                                                        <button><img src="img/menus/close.svg"
+                                                        <button><img src="{{ asset('assets/img/menus/close.svg') }}"
                                                                 alt="icon"></button>
                                                     </div>
                                                 </div>
@@ -1021,7 +1025,8 @@
                                                     <div class="col">
                                                         <div class="row x-gap-10 y-gap-10">
                                                             <div class="col-auto">
-                                                                <img src="img/menus/cart/2.png" alt="image">
+                                                                <img src="{{ asset('assets/img/menus/cart/2.png') }}"
+                                                                    alt="image">
                                                             </div>
 
                                                             <div class="col">
@@ -1040,7 +1045,7 @@
                                                     </div>
 
                                                     <div class="col-auto">
-                                                        <button><img src="img/menus/close.svg"
+                                                        <button><img src="{{ asset('assets/img/menus/close.svg') }}"
                                                                 alt="icon"></button>
                                                     </div>
                                                 </div>
@@ -1088,3 +1093,4 @@
                 </div>
             </div>
         </header>
+        <div class="content-wrapper js-content-wrapper">
