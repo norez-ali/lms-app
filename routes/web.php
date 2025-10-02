@@ -6,23 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-// Route::get('/test', function () {
-//     return view('dashboard.admin.index');
-// });
-// Admin routes
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', fn() => view('dashboard.admin.index'))->name('admin.dashboard');
-});
 
-// Teacher routes
-Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->group(function () {
-    Route::get('/dashboard', fn() => view('dashboard.teacher.index'))->name('teacher.dashboard');
-});
-
-// Student routes
-Route::middleware(['auth', 'role:student'])->prefix('student')->group(function () {
-    Route::get('/dashboard', fn() => view('dashboard.student.index'))->name('student.dashboard');
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -35,3 +19,6 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/student.php';
+require __DIR__ . '/teacher.php';
+require __DIR__ . '/admin.php';

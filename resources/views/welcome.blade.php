@@ -20,7 +20,8 @@
                         </p>
                         <div data-anim-child="slide-up delay-2" class="masthead__buttons row x-gap-10 y-gap-10">
                             <div class="col-12 col-sm-auto">
-                                <a data-barba href="signup.html" class="button -md -purple-1 text-white">Join For Free</a>
+                                <a data-barba href="{{ route('register') }}" class="button -md -purple-1 text-white">Join
+                                    For Free</a>
                             </div>
                             <div class="col-12 col-sm-auto">
                                 <a data-barba href="courses-list-1.html"
@@ -5672,7 +5673,7 @@
                         </div>
 
                         <div data-anim-child="slide-up delay-4" class="d-inline-block mt-30">
-                            <a href="signup.html" class="button -md -dark-1 text-white">Join Free</a>
+                            <a href="{{ route('register') }}" class="button -md -dark-1 text-white">Join Free</a>
                         </div>
                     </div>
                 </div>

@@ -53,7 +53,7 @@
                         <div class="header-left">
 
                             <div class="header__logo ">
-                                <a data-barba href="index.html">
+                                <a data-barba href="{{ url('/') }}">
                                     <img src="{{ asset('assets/img/general/logo.svg') }}" alt="logo">
                                 </a>
                             </div>
@@ -1067,9 +1067,19 @@
                             </div>
 
                             <div class="header-right__buttons d-flex items-center ml-30 md:d-none">
-                                <a href="{{ route('login') }}" class="button -underline text-white">Log in</a>
-                                <a href="{{ route('register') }}" class="button -sm -white text-dark-1 ml-30">Sign
-                                    up</a>
+                                @if (!Auth::check())
+                                    <a href="{{ route('login') }}" class="button -underline text-white">Log in</a>
+                                    <a href="{{ route('register') }}"
+                                        class="button -sm -white text-dark-1 ml-30">Sign
+                                        up</a>
+                                @else
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="button -sm -white text-dark-1 ml-30">
+                                            Logout
+                                        </button>
+                                    </form>
+                                @endif
                             </div>
                         </div>
                     </div>

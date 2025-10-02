@@ -55,7 +55,7 @@
                                 </div>
 
                                 <div class="header__logo ml-30 md:ml-20">
-                                    <a data-barba href="index.html">
+                                    <a data-barba href="{{ url('/') }}">
                                         <img class="-light-d-none" src="{{ asset('assets/img/general/logo.svg') }}"
                                             alt="logo" />
                                         <img class="-dark-d-none" src="{{ asset('assets/img/general/logo-dark.svg') }}"
@@ -70,32 +70,19 @@
                                 <div class="text-white d-flex items-center lg:d-none mr-15">
                                     <div class="dropdown bg-transparent px-0 py-0">
                                         <div class="d-flex items-center text-14 text-dark-1">
-                                            All Pages <i class="text-9 icon-chevron-down ml-10"></i>
+                                            Actions <i class="text-9 icon-chevron-down ml-10"></i>
                                         </div>
                                         <div class="dropdown__item -dark-bg-dark-2 -dark-border-white-10">
                                             <div class="text-14 y-gap-15">
                                                 <div>
-                                                    <a href="dashboard.html" class="d-block text-dark-1">Dashboard</a>
+                                                    <form method="POST" action="{{ route('logout') }}">
+                                                        @csrf
+                                                        <button type="submit" class="button -sm  text-dark-1 ml-30">
+                                                            Logout
+                                                        </button>
+                                                    </form>
                                                 </div>
-                                                <div>
-                                                    <a href="dshb-courses.html" class="d-block text-dark-1">My
-                                                        Courses</a>
-                                                </div>
-                                                <div>
-                                                    <a href="dshb-bookmarks.html"
-                                                        class="d-block text-dark-1">Bookmarks</a>
-                                                </div>
-                                                <div>
-                                                    <a href="dshb-listing.html" class="d-block text-dark-1">Add
-                                                        Listing</a>
-                                                </div>
-                                                <div>
-                                                    <a href="dshb-reviews.html" class="d-block text-dark-1">Reviews</a>
-                                                </div>
-                                                <div>
-                                                    <a href="dshb-settings.html"
-                                                        class="d-block text-dark-1">Settings</a>
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
