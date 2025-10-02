@@ -22,6 +22,7 @@
         crossorigin="" />
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.jpg') }}">
 
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ asset('assets/css/vendors.css') }}">
@@ -230,8 +231,8 @@
                             <div class="mobile-bg js-mobile-bg"></div>
 
                             <div class="d-none xl:d-flex items-center px-20 py-20 border-bottom-light">
-                                <a href="login.html" class="text-dark-1">Log in</a>
-                                <a href="signup.html" class="text-dark-1 ml-30">Sign Up</a>
+                                <a href="{{ route('login') }}" class="text-dark-1">Log in</a>
+                                <a href="{{ route('register') }}" class="text-dark-1 ml-30">Sign Up</a>
                             </div>
 
                             <div class="menu js-navList">
@@ -248,24 +249,6 @@
                                             </li>
 
                                             <li><a href="index.html">Home 1</a></li>
-
-                                            <li><a href="home-2.html">Home 2</a></li>
-
-                                            <li><a href="home-3.html">Home 3</a></li>
-
-                                            <li><a href="home-4.html">Home 4</a></li>
-
-                                            <li><a href="home-5.html">Home 5</a></li>
-
-                                            <li><a href="home-6.html">Home 6</a></li>
-
-                                            <li><a href="home-7.html">Home 7</a></li>
-
-                                            <li><a href="home-8.html">Home 8</a></li>
-
-                                            <li><a href="home-9.html">Home 9</a></li>
-
-                                            <li><a href="home-10.html">Home 10</a></li>
 
                                         </ul>
                                     </li>
@@ -864,11 +847,11 @@
                                             </li>
 
                                             <li>
-                                                <a href="login.html">Login</a>
+                                                <a href="{{ route('login') }}">Login</a>
                                             </li>
 
                                             <li>
-                                                <a href="signup.html">Register</a>
+                                                <a href="{{ route('register') }}">Register</a>
                                             </li>
 
                                             <li>
@@ -1084,8 +1067,9 @@
                             </div>
 
                             <div class="header-right__buttons d-flex items-center ml-30 md:d-none">
-                                <a href="login.html" class="button -underline text-white">Log in</a>
-                                <a href="signup.html" class="button -sm -white text-dark-1 ml-30">Sign up</a>
+                                <a href="{{ route('login') }}" class="button -underline text-white">Log in</a>
+                                <a href="{{ route('register') }}" class="button -sm -white text-dark-1 ml-30">Sign
+                                    up</a>
                             </div>
                         </div>
                     </div>

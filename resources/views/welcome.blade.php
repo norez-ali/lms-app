@@ -2,7 +2,7 @@
 @section('content')
     <section class="masthead -type-1 js-mouse-move-container">
         <div class="masthead__bg">
-            <img src="{{ asset('assets/img/home-1/hero/bg.png') }}" alt="image" />
+            <img src="{{ asset('assets/img/dashboard-1/hero/bg.png') }}" alt="image" />
         </div>
 
         <div class="container">
