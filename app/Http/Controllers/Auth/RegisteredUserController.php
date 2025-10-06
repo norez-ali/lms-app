@@ -42,7 +42,7 @@ class RegisteredUserController extends Controller
             'role' => $request->role,
             'password' => Hash::make($request->password),
         ]);
-
+        $user->profile()->create();
         event(new Registered($user));
 
         return redirect()->route('login')->with('message', 'Registration successful. Please login.');

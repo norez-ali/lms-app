@@ -21,6 +21,9 @@
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
         crossorigin="" />
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.jpg') }}">
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 

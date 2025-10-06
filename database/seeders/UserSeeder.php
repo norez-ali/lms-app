@@ -46,5 +46,15 @@ class UserSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+        // Fetch all users and create blank profiles
+        $users = DB::table('users')->get();
+
+        foreach ($users as $user) {
+            DB::table('profiles')->insert([
+                'user_id' => $user->id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
     }
 }

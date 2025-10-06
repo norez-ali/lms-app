@@ -1,6 +1,7 @@
 @extends('layouts.dashboard.main')
 @section('content')
     <div class="dashboard__main">
+
         <div class="dashboard__content bg-light-4">
             <div class="row pb-50 mb-10">
                 <div class="col-auto">
@@ -461,6 +462,4 @@
                 </div>
             </div>
         </div>
-
-       
-@endsection
+    @endsection

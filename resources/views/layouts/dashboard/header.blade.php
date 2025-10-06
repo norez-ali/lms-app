@@ -22,12 +22,14 @@
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
         crossorigin="" />
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.jpg') }}">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ asset('assets/css/vendors.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" />
-
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Educrat</title>
     @stack('title')
     @stack('styles')
