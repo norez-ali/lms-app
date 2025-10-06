@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Education;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
@@ -74,6 +76,104 @@ class ProfileController extends Controller
             'success' => true,
             'message' => 'Profile photo updated successfully!',
             'photo_url' => asset('storage/' . $path),
+        ]);
+    }
+    public function deletePhoto(Request $request)
+    {
+        $user = Auth::user();
+        $profile = Profile::where('user_id', $user->id)->first();
+
+        if ($profile && $profile->profile_photo) {
+            $oldPath = str_replace('storage/', '', $profile->profile_photo);
+            if (Storage::disk('public')->exists($oldPath)) {
+                Storage::disk('public')->delete($oldPath);
+            }
+            $profile->update(['profile_photo' => null]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Profile photo deleted successfully!',
+            'photo_url' => asset('assets/img/dashboard/edit/1.png'), // default image
+        ]);
+    }
+    public function updatePassword(Request $request)
+    {
+        $user = Auth::user();
+
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
+        ]);
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Your current password is incorrect.'
+            ], 422);
+        }
+
+        $user->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Password updated successfully!'
+        ]);
+    }
+    public function updateExperience(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($user->role !== 'teacher') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Only teachers can update experience.'
+            ], 403);
+        }
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'institution' => 'required|string|max:255',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'description' => 'nullable|string',
+        ]);
+
+        // 🔁 Create or update teacher's experience
+        $experience = \App\Models\Experience::updateOrCreate(
+            ['user_id' => $user->id],
+            $validated
+        );
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Experience updated successfully!',
+            'data' => $experience,
+        ]);
+    }
+    public function updateEducation(Request $request)
+    {
+        $user = Auth::user();
+
+        $validated = $request->validate([
+            'degree' => 'required|string|max:255',
+            'institution' => 'required|string|max:255',
+            'start_year' => 'nullable|integer|min:1950|max:' . date('Y'),
+            'end_year' => 'nullable|integer|min:1950|max:' . date('Y'),
+            'description' => 'nullable|string',
+        ]);
+
+        $education = Education::updateOrCreate(
+            ['user_id' => $user->id],
+            $validated
+        );
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Education record updated successfully!',
+            'education' => $education,
         ]);
     }
 }

@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Education;
+use App\Models\Experience;
+use App\Models\Profile;
+
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -53,5 +57,9 @@ class User extends Authenticatable
     public function experiences()
     {
         return $this->hasMany(Experience::class);
+    }
+    public function educations()
+    {
+        return $this->hasMany(Education::class);
     }
 }

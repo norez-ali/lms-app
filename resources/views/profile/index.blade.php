@@ -23,14 +23,18 @@
                             type="button">
                             Password
                         </button>
-                        <button class="tabs__button text-light-1 js-tabs-button" data-tab-target=".-tab-item-3"
-                            type="button">
-                            Social Profiles
-                        </button>
-                        <button class="tabs__button text-light-1 js-tabs-button" data-tab-target=".-tab-item-4"
-                            type="button">
-                            Notifications
-                        </button>
+                        @if (auth()->user()->role === 'teacher')
+                            <button class="tabs__button text-light-1 js-tabs-button" data-tab-target=".-tab-item-3"
+                                type="button">
+                                Experiences
+                            </button>
+                        @endif
+                        @if (auth()->user()->role === 'teacher')
+                            <button class="tabs__button text-light-1 js-tabs-button" data-tab-target=".-tab-item-4"
+                                type="button">
+                                Education
+                            </button>
+                        @endif
                         <button class="tabs__button text-light-1 js-tabs-button" data-tab-target=".-tab-item-5"
                             type="button">
                             Close Account
@@ -59,9 +63,12 @@
                                         </div>
                                         <div>
                                             <div
-                                                class="d-flex justify-center items-center size-40 rounded-8 bg-light-3">
+                                                class="d-flex justify-center items-center size-40 rounded-8 bg-light-3 cursor-pointer delete-photo">
                                                 <div class="icon-bin text-16"></div>
                                             </div>
+                                            <form id="deletePhotoForm" class="ajaxForm d-none"
+                                                action="{{ route('profile.photo.delete') }}" method="POST"> @csrf
+                                                @method('DELETE') </form>
                                         </div>
                                     </div>
                                 </div>
@@ -95,265 +102,164 @@
                         </div>
 
                         <div class="tabs__pane -tab-item-2">
-                            <form action="#" class="contact-form row y-gap-30">
+                            <form action="{{ route('profile.password.update') }}" method="POST"
+                                class="ajaxForm contact-form row y-gap-30">
+                                @csrf
+                                @method('PUT')
 
                                 <div class="col-md-7">
-
-                                    <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">Current password</label>
-
-                                    <input type="text" placeholder="Current password">
+                                    <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">Current Password</label>
+                                    <input type="password" name="current_password" placeholder="Enter current password"
+                                        required>
                                 </div>
 
-
                                 <div class="col-md-7">
-
-                                    <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">New password</label>
-
-                                    <input type="text" placeholder="New password">
+                                    <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">New Password</label>
+                                    <input type="password" name="new_password" placeholder="Enter new password"
+                                        required>
                                 </div>
 
-
                                 <div class="col-md-7">
-
                                     <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">Confirm New Password</label>
-
-                                    <input type="text" placeholder="Confirm New Password">
+                                    <input type="password" name="new_password_confirmation"
+                                        placeholder="Confirm new password" required>
                                 </div>
 
                                 <div class="col-12">
-                                    <button class="button -md -purple-1 text-white">Save Password</button>
+                                    <button type="submit" class="button -md -purple-1 text-white">Save
+                                        Password</button>
                                 </div>
                             </form>
+
                         </div>
+                        @if (auth()->user()->role === 'teacher')
+                            <div class="tabs__pane -tab-item-3">
 
-                        <div class="tabs__pane -tab-item-3">
-                            <form action="#" class="contact-form row y-gap-30">
+                                <form action="{{ route('profile.experience.update') }}" method="POST"
+                                    class="ajaxForm contact-form row y-gap-30 bg-white rounded-2xl p-4 shadow-sm">
+                                    @csrf
 
-                                <div class="col-md-6">
-
-                                    <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">Twitter</label>
-
-                                    <input type="text" placeholder="Twitter Profile">
-                                </div>
-
-
-                                <div class="col-md-6">
-
-                                    <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">Facebook</label>
-
-                                    <input type="text" placeholder="Facebook Profile">
-                                </div>
-
-
-                                <div class="col-md-6">
-
-                                    <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">Instagram</label>
-
-                                    <input type="text" placeholder="Instagram Profile">
-                                </div>
-
-
-                                <div class="col-md-6">
-
-                                    <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">LinkedIn Profile URL</label>
-
-                                    <input type="text" placeholder="LinkedIn Profile">
-                                </div>
-
-                                <div class="col-12">
-                                    <button class="button -md -purple-1 text-white">Save Social Profile</button>
-                                </div>
-                            </form>
-                        </div>
-
-                        <div class="tabs__pane -tab-item-4">
-                            <form action="#" class="contact-form">
-                                <div class="row">
                                     <div class="col-12">
-                                        <div class="text-16 fw-500 text-dark-1">Notifications - Choose when and how to
-                                            be
-                                            notified</div>
-                                        <p class="text-14 lh-13 mt-5">Select push and email notifications you'd like to
-                                            receive</p>
+                                        <h3 class="fw-600 mb-20 text-dark-1">Teaching Experience</h3>
                                     </div>
-                                </div>
 
-                                <div class="pt-60">
-                                    <div class="row y-gap-20 justify-between">
-                                        <div class="col-auto">
-                                            <div class="text-16 fw-500 text-dark-1">Choose when and how to be notified
-                                            </div>
+                                    <div class="col-md-6">
+                                        <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">Job Title</label>
+                                        <input type="text" name="title"
+                                            value="{{ optional(auth()->user()->experience)->title }}"
+                                            class="form-control w-100 border border-light-3 rounded-8 px-3 py-2 focus:border-purple-1 focus:ring-1 focus:ring-purple-1 outline-none"
+                                            placeholder="e.g. Assistant Professor" required>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">Institution</label>
+                                        <input type="text" name="institution"
+                                            value="{{ optional(auth()->user()->experience)->institution }}"
+                                            class="form-control w-100 border border-light-3 rounded-8 px-3 py-2 focus:border-purple-1 focus:ring-1 focus:ring-purple-1 outline-none"
+                                            placeholder="e.g. XYZ University" required>
+                                    </div>
+
+                                    {{-- ✨ Start & End Date Styled Side by Side --}}
+                                    <div class="col-md-6">
+                                        <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">Start Date</label>
+                                        <div class="relative">
+                                            <input type="date" name="start_date"
+                                                value="{{ optional(auth()->user()->experience)->start_date }}"
+                                                class="form-control w-100 border border-light-3 rounded-8 px-3 py-2 pr-10 focus:border-purple-1 focus:ring-1 focus:ring-purple-1 outline-none">
+                                            <i class="icon-calendar text-gray-400 absolute right-3 top-3 text-18"></i>
                                         </div>
                                     </div>
 
-
-                                    <div class="pt-30">
-
-                                        <div class="row y-gap-20 justify-between">
-                                            <div class="col-auto">
-                                                <div class="text-16 fw-500 text-dark-1">Subscriptions</div>
-                                                <p class="text-14 lh-13 mt-5">Notify me about activity from the
-                                                    profiles
-                                                    I'm subscribed to</p>
-                                            </div>
-                                            <div class="col-auto">
-                                                <div class="form-switch">
-                                                    <div class="switch" data-switch=".js-switch-content">
-                                                        <input type="checkbox">
-                                                        <span class="switch__slider"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                    <div class="col-md-6">
+                                        <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">End Date</label>
+                                        <div class="relative">
+                                            <input type="date" name="end_date"
+                                                value="{{ optional(auth()->user()->experience)->end_date }}"
+                                                class="form-control w-100 border border-light-3 rounded-8 px-3 py-2 pr-10 focus:border-purple-1 focus:ring-1 focus:ring-purple-1 outline-none">
+                                            <i class="icon-calendar text-gray-400 absolute right-3 top-3 text-18"></i>
                                         </div>
                                     </div>
 
-
-                                    <div class="border-top-light pt-20 mt-20">
-
-                                        <div class="row y-gap-20 justify-between">
-                                            <div class="col-auto">
-                                                <div class="text-16 fw-500 text-dark-1">Recommended Courses</div>
-                                                <p class="text-14 lh-13 mt-5">Notify me about activity from the
-                                                    profiles
-                                                    I'm subscribed to</p>
-                                            </div>
-                                            <div class="col-auto">
-                                                <div class="form-switch">
-                                                    <div class="switch" data-switch=".js-switch-content">
-                                                        <input type="checkbox">
-                                                        <span class="switch__slider"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="border-top-light pt-20 mt-20">
-
-                                        <div class="row y-gap-20 justify-between">
-                                            <div class="col-auto">
-                                                <div class="text-16 fw-500 text-dark-1">Replies to my comments</div>
-                                                <p class="text-14 lh-13 mt-5">Notify me about activity from the
-                                                    profiles
-                                                    I'm subscribed to</p>
-                                            </div>
-                                            <div class="col-auto">
-                                                <div class="form-switch">
-                                                    <div class="switch" data-switch=".js-switch-content">
-                                                        <input type="checkbox">
-                                                        <span class="switch__slider"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="border-top-light pt-20 mt-20">
-
-                                        <div class="row y-gap-20 justify-between">
-                                            <div class="col-auto">
-                                                <div class="text-16 fw-500 text-dark-1">Activity on my comments</div>
-                                                <p class="text-14 lh-13 mt-5">Notify me about activity from the
-                                                    profiles
-                                                    I'm subscribed to</p>
-                                            </div>
-                                            <div class="col-auto">
-                                                <div class="form-switch">
-                                                    <div class="switch" data-switch=".js-switch-content">
-                                                        <input type="checkbox">
-                                                        <span class="switch__slider"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="pt-60">
-                                    <div class="row y-gap-20 justify-between">
-                                        <div class="col-auto">
-                                            <div class="text-16 fw-500 text-dark-1">Email notifications</div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="pt-30">
-
-                                        <div class="row y-gap-20 justify-between">
-                                            <div class="col-auto">
-                                                <div class="text-16 fw-500 text-dark-1">Send me emails about my Cursus
-                                                    activity and updates I requested</div>
-                                                <p class="text-14 lh-13 mt-5">Notify me about activity from the
-                                                    profiles
-                                                    I'm subscribed to</p>
-                                            </div>
-                                            <div class="col-auto">
-                                                <div class="form-switch">
-                                                    <div class="switch" data-switch=".js-switch-content">
-                                                        <input type="checkbox">
-                                                        <span class="switch__slider"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="border-top-light pt-20 mt-20">
-
-                                        <div class="row y-gap-20 justify-between">
-                                            <div class="col-auto">
-                                                <div class="text-16 fw-500 text-dark-1">Promotions, course
-                                                    recommendations, and helpful resources from Cursus.</div>
-                                                <p class="text-14 lh-13 mt-5">Notify me about activity from the
-                                                    profiles
-                                                    I'm subscribed to</p>
-                                            </div>
-                                            <div class="col-auto">
-                                                <div class="form-switch">
-                                                    <div class="switch" data-switch=".js-switch-content">
-                                                        <input type="checkbox">
-                                                        <span class="switch__slider"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="border-top-light pt-20 mt-20">
-
-                                        <div class="row y-gap-20 justify-between">
-                                            <div class="col-auto">
-                                                <div class="text-16 fw-500 text-dark-1">Announcements from instructors
-                                                    whose course(s) I’m enrolled in.</div>
-                                                <p class="text-14 lh-13 mt-5">Notify me about activity from the
-                                                    profiles
-                                                    I'm subscribed to</p>
-                                            </div>
-                                            <div class="col-auto">
-                                                <div class="form-switch">
-                                                    <div class="switch" data-switch=".js-switch-content">
-                                                        <input type="checkbox">
-                                                        <span class="switch__slider"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="row pt-30">
                                     <div class="col-12">
-                                        <button class="button -md -purple-1 text-white">Save Changes</button>
+                                        <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">Description</label>
+                                        <textarea name="description" rows="4"
+                                            class="form-control w-100 border border-light-3 rounded-8 px-3 py-2 focus:border-purple-1 focus:ring-1 focus:ring-purple-1 outline-none"
+                                            placeholder="Describe your teaching role">{{ optional(auth()->user()->experience)->description }}</textarea>
                                     </div>
-                                </div>
-                            </form>
-                        </div>
+
+                                    <div class="col-12">
+                                        <button type="submit"
+                                            class="button -md -purple-1 text-white hover:opacity-90 transition-all">
+                                            Save Experience
+                                        </button>
+                                    </div>
+                                </form>
+
+
+                            </div>
+                        @endif
+
+                        @if (auth()->user()->role === 'teacher')
+                            <div class="tabs__pane -tab-item-4">
+                                <form action="{{ route('profile.education.update') }}" method="POST"
+                                    class="ajaxForm contact-form row y-gap-30 bg-white rounded-2xl p-4 shadow-sm ">
+                                    @csrf
+
+                                    <div class="col-12">
+                                        <h3 class="fw-600 mb-10 text-dark-1">Education</h3>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">Degree</label>
+                                        <input type="text" name="degree"
+                                            value="{{ optional(auth()->user()->education)->degree }}"
+                                            class="form-control w-100 border border-light-3 rounded-8 px-3 py-2 h-50 focus:border-purple-1 focus:ring-1 focus:ring-purple-1 outline-none"
+                                            placeholder="e.g. Master of Education" required>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">Institution</label>
+                                        <input type="text" name="institution"
+                                            value="{{ optional(auth()->user()->education)->institution }}"
+                                            class="form-control w-100 border border-light-3 rounded-8 px-3 py-2 h-50 focus:border-purple-1 focus:ring-1 focus:ring-purple-1 outline-none"
+                                            placeholder="e.g. University of Karachi" required>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">Start Year</label>
+                                        <input type="number" name="start_year" min="1950"
+                                            max="{{ date('Y') }}"
+                                            value="{{ optional(auth()->user()->education)->start_year }}"
+                                            class="form-control w-100 border border-light-3 rounded-8 px-3 py-2 h-50 focus:border-purple-1 focus:ring-1 focus:ring-purple-1 outline-none"
+                                            placeholder="e.g. 2015">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">End Year</label>
+                                        <input type="number" name="end_year" min="1950"
+                                            max="{{ date('Y') }}"
+                                            value="{{ optional(auth()->user()->education)->end_year }}"
+                                            class="form-control w-100 border border-light-3 rounded-8 px-3 py-2 h-50 focus:border-purple-1 focus:ring-1 focus:ring-purple-1 outline-none"
+                                            placeholder="e.g. 2019">
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">Description</label>
+                                        <textarea name="description" rows="4"
+                                            class="form-control w-100 border border-light-3 rounded-8 px-3 py-2 focus:border-purple-1 focus:ring-1 focus:ring-purple-1 outline-none"
+                                            placeholder="Describe your academic background">{{ optional(auth()->user()->education)->description }}</textarea>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <button type="submit"
+                                            class="button -md -purple-1 text-white hover:opacity-90 transition-all">
+                                            Save Education
+                                        </button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        @endif
 
                         <div class="tabs__pane -tab-item-5">
                             <form action="#" class="contact-form row y-gap-30">

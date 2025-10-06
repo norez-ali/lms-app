@@ -55,6 +55,12 @@
           // Add active class to the parent of the clicked link
           $(this).closest('.sidebar__item').addClass('-is-active');
       });
+      //profile photo deletion handling
+      $(document).on('click', '.delete-photo', function(e) {
+          e.preventDefault();
+          $('#deletePhotoForm').submit();
+
+      });
       //this is to handle profile
 
       $(document).ready(function() {
@@ -141,7 +147,7 @@
                               });
 
                           setTimeout(() => msg.fadeOut(500, () => msg.remove()),
-                          3000);
+                              3000);
                       },
 
                       error: function() {
