@@ -1076,6 +1076,12 @@
                                         class="button -sm -white text-dark-1 ml-30">Sign
                                         up</a>
                                 @else
+                                    <a href=" @if (auth()->user()->role === 'admin') {{ route('admin.dashboard') }}
+    @elseif(auth()->user()->role === 'teacher')
+        {{ route('teacher.dashboard') }}
+    @else
+        {{ route('student.dashboard') }} @endif"
+                                        class="button -underline text-white mr-2">Dashboard</a>
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
                                         <button type="submit" class="button -sm -white text-dark-1 ml-30">

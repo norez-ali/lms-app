@@ -163,6 +163,55 @@
           });
 
       });
+      $(document).ready(function() {
+          $('.create-category').on('submit', function(e) {
+              e.preventDefault();
+
+              let form = $(this);
+              let formData = new FormData(this);
+              let url = form.attr('action'); // ✅ dynamically get the action URL
+
+              $.ajax({
+                  url: url,
+                  method: "POST",
+                  data: formData,
+                  contentType: false,
+                  processData: false,
+                  beforeSend: function() {
+                      $('.button[type="submit"]').prop('disabled', true).text('Saving...');
+                  },
+                  success: function(response) {
+                      $('.button[type="submit"]').prop('disabled', false).text(
+                          'Save Category');
+
+                      if (response.success) {
+                          alert(response.message);
+                          form[0].reset();
+
+                          // ✅ Redirect to admin.dashboard after success
+                          window.location.href = "{{ route('admin.dashboard') }}";
+                      } else {
+                          alert('Something went wrong!');
+                      }
+                  },
+                  error: function(xhr) {
+                      $('.button[type="submit"]').prop('disabled', false).text(
+                          'Save Category');
+
+                      if (xhr.status === 422) {
+                          let errors = xhr.responseJSON.errors;
+                          let errorMsg = '';
+                          $.each(errors, function(key, value) {
+                              errorMsg += value[0] + '\n';
+                          });
+                          alert(errorMsg);
+                      } else {
+                          alert('An error occurred. Please try again.');
+                      }
+                  }
+              });
+          });
+      });
   </script>
   </body>
 

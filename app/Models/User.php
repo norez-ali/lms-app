@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Admin\Course;
 use App\Models\Education;
 use App\Models\Experience;
 use App\Models\Profile;
@@ -61,5 +62,9 @@ class User extends Authenticatable
     public function educations()
     {
         return $this->hasMany(Education::class);
+    }
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
     }
 }

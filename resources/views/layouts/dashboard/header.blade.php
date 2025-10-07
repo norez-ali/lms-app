@@ -372,7 +372,8 @@
 
                                 <div class="relative d-flex items-center ml-10">
                                     <a href="#" data-el-toggle=".js-profile-toggle">
-                                        <img class="size-50" src="{{ asset('assets/img/misc/user-profile.png') }}"
+                                        <img class="size-50 rounded-full object-cover"
+                                            src="{{ auth()->user()->profile && auth()->user()->profile->profile_photo ? asset('storage/' . auth()->user()->profile->profile_photo) : asset('assets/img/dashboard/edit/1.png') }}"
                                             alt="image" />
                                     </a>
 

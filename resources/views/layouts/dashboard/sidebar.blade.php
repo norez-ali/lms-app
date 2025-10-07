@@ -10,20 +10,31 @@
     @else
         {{ route('student.dashboard') }} @endif
 "
-                          class="control-dshb d-flex items-center text-17 lh-1 fw-500 -dark-text-white">
+                          class=" d-flex items-center text-17 lh-1 fw-500 -dark-text-white">
                           <i class="text-20 icon-discovery mr-15"></i>
                           Dashboard
                       </a>
 
                   </div>
 
-
-                  <div class="sidebar__item">
-                      <a href="dshb-courses.html" class="control-dshb d-flex items-center text-17 lh-1 fw-500">
-                          <i class="text-20 icon-play-button mr-15"></i>
-                          My Courses
-                      </a>
-                  </div>
+                  @if (auth()->user()->role === 'student' || auth()->user()->role === 'teacher')
+                      <div class="sidebar__item">
+                          <a href="dshb-courses.html" class="control-dshb d-flex items-center text-17 lh-1 fw-500">
+                              <i class="text-20 icon-play-button mr-15"></i>
+                              My Courses
+                          </a>
+                      </div>
+                  @endif
+                  @if (auth()->user()->role === 'admin')
+                      <div class="sidebar__item">
+                          <a href="{{ route('admin.categories') }}"
+                              class="control-dshb d-flex items-center text-17 lh-1 fw-500">
+                              <img src="{{ asset('assets/categories.png') }}" alt=""
+                                  class="w-5 mr-15 text-blue-300">
+                              Manage Categories
+                          </a>
+                      </div>
+                  @endif
 
                   <div class="sidebar__item">
                       <a href="#" class="control-dshb d-flex items-center text-17 lh-1 fw-500">

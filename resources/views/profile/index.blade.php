@@ -47,7 +47,7 @@
                                 <div class="col-auto">
                                     <img class="size-100 rounded-full object-cover"
                                         src="{{ $profile && $profile->profile_photo ? asset('storage/' . $profile->profile_photo) : asset('assets/img/dashboard/edit/1.png') }}"
-                                        alt="image">
+                                        alt="profile_photo">
                                 </div>
 
                                 <div class="col-auto">
