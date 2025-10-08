@@ -22,11 +22,13 @@
                     style="min-height: 280px; position: relative;">
 
                     <!-- Rounded Image -->
-                    <div class="rounded-circle d-flex align-items-center justify-content-center mb-15 mt-25"
-                        style="width: 150px; height: 150px;">
+                    <div class="mb-15 mt-25"
+                        style="width:150px; height:150px; border-radius:50%; overflow:hidden; display:flex; align-items:center; justify-content:center; background:#f8f9fa; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
                         <img src="{{ asset($category->image ?? 'assets/img/dashboard/edit/1.png') }}"
-                            alt="{{ $category->name }} image" class="w-70 h-70 object-contain  ">
+                            alt="{{ $category->name }} image"
+                            style="width:100%; height:100%; object-fit:cover; border-radius:50%; transition:transform 0.3s;">
                     </div>
+
 
                     <!-- Category Name -->
                     <h3 class="text-17 fw-600 text-dark-1 mb-15">{{ $category->name }}</h3>

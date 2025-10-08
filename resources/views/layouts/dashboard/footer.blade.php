@@ -20,16 +20,31 @@
           $.ajax({
               url: url,
               type: 'GET',
-              success: function(response) {
 
-                  $('.dashboard__content').html(response); // append the returned view
+              beforeSend: function() {
+                  // Show a loading message before the request starts
+                  $('.dashboard__content').html(`
+                <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
+                    <div class="text-center">
+                        <div class="spinner-border text-primary mb-3" role="status"></div>
+                        <p class="fw-bold text-primary mb-0">Loading...</p>
+                    </div>
+                </div>
+            `);
               },
+
+              success: function(response) {
+                  // Load the view into dashboard content
+                  $('.dashboard__content').html(response);
+              },
+
               error: function(xhr) {
                   console.error("Error loading content:", xhr.responseText);
                   $('.dashboard__content').html('<p class="text-danger">Failed to load content.</p>');
               }
           });
       });
+
       //   getting between settings tabs
       $(document).on('click', '.js-tabs-button', function() {
           // Remove active class from all buttons
@@ -163,6 +178,7 @@
           });
 
       });
+      //creating category
       $(document).ready(function() {
           $('.create-category').on('submit', function(e) {
               e.preventDefault();
@@ -208,6 +224,97 @@
                       } else {
                           alert('An error occurred. Please try again.');
                       }
+                  }
+              });
+          });
+      });
+      //updating category
+
+      $(document).ready(function() {
+          // Attach event listener to your form
+          $(document).on('submit', '.update-category', function(e) {
+              e.preventDefault(); // stop normal form submit
+
+              let form = $(this);
+              let actionUrl = form.attr('action');
+              let formData = new FormData(this);
+
+              // Remove old messages
+              $('.update-success-message').remove();
+              $('.text-danger').remove();
+
+              $.ajax({
+                  url: actionUrl,
+                  type: 'POST',
+                  data: formData,
+                  contentType: false,
+                  processData: false,
+                  headers: {
+                      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                      'X-HTTP-Method-Override': 'PUT'
+                  },
+                  success: function(response) {
+                      if (response.success) {
+                          // ✅ Update fields
+                          form.find('input[name="name"]').val(response.category.name);
+                          form.find('img').attr('src', response.category.image + '?t=' +
+                              new Date().getTime());
+
+                          // ✅ Show success message
+                          let message = $(
+                                  '<div class="update-success-message alert alert-success mt-3"></div>'
+                              )
+                              .text(response.message);
+                          form.append(message);
+
+                          // Optional fade-out
+                          setTimeout(() => {
+                              message.fadeOut(500, function() {
+                                  $(this).remove();
+                              });
+                          }, 3000);
+                      }
+                  },
+                  error: function(xhr) {
+                      // Handle validation errors
+                      if (xhr.status === 422) {
+                          let errors = xhr.responseJSON.errors;
+                          $.each(errors, function(key, value) {
+                              form.find(`[name="${key}"]`).after(
+                                  '<small class="text-danger">' + value[0] +
+                                  '</small>');
+                          });
+                      } else {
+                          console.error('Error:', xhr.responseText);
+                      }
+                  }
+              });
+          });
+      });
+      //deleting category
+
+      $(document).ready(function() {
+          $(document).on('submit', '.delete-category', function(e) {
+              e.preventDefault(); // stop normal form submission
+
+
+
+              let form = $(this);
+              let actionUrl = form.attr('action');
+
+              $.ajax({
+                  url: actionUrl,
+                  type: 'POST',
+                  data: form.serialize(),
+                  success: function(response) {
+                      if (response.success) {
+                          // Remove category card from the DOM
+                          window.location.href = "{{ route('admin.dashboard') }}";
+
+                      }
+                  },
+                  error: function(xhr) {
+                      console.error(xhr.responseText);
                   }
               });
           });

@@ -5,8 +5,7 @@
                 <h2 class="text-17 lh-1 fw-500">Edit Category</h2>
 
                 {{-- Delete button --}}
-                <form action="" method="POST"
-                    onsubmit="return confirm('Are you sure you want to delete this category?');">
+                <form action="{{ route('admin.delete.category', $category->id) }}" method="POST"class="delete-category">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="button -sm -outline-danger text-danger">
@@ -17,7 +16,8 @@
 
             <div class="py-30 px-30">
                 {{-- Laravel form for updating category --}}
-                <form class="update-category contact-form row y-gap-30" action="" method="POST"
+                <form class="update-category contact-form row y-gap-30"
+                    action="{{ route('admin.update.category', $category->id) }}" method="POST"
                     enctype="multipart/form-data">
 
                     @csrf

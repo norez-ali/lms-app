@@ -13,11 +13,17 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('category_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('category_id')->nullable()->constrained()->nullOnDelete();
+            $table->unsignedBigInteger('teacher_id')->nullable()->constrained('users')->nullOnDelete();
             $table->string('title');
-            $table->text('description')->nullable();
-            $table->unsignedBigInteger('teacher_id')->nullable()->constrained('users')->onDelete('set null');
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending'); // For teacher application system
+            $table->string('slug')->unique();
+            $table->text('short_description')->nullable();
+            $table->longText('description')->nullable();
+            $table->longText('learning_outcomes')->nullable();
+            $table->longText('requirements')->nullable();
+            $table->string('level')->nullable();            // e.g. beginner/intermediate/advanced
+            $table->string('audio_language')->nullable();
+            $table->string('thumbnail')->nullable();        // e.g. storage/uploads/courses/xxx.jpg
             $table->timestamps();
         });
     }

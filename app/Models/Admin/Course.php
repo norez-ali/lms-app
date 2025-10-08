@@ -10,10 +10,18 @@ class Course extends Model
 {
     protected $fillable = [
         'category_id',
-        'title',
-        'description',
         'teacher_id',
-        'status',
+        'title',
+        'slug',
+        'short_description',
+        'description',
+        'learning_outcomes',
+        'requirements',
+        'level',
+        'audio_language',
+        'thumbnail',
+
+
     ];
     public function category()
     {
@@ -22,5 +30,13 @@ class Course extends Model
     public function users()
     {
         return $this->belongsToMany(User::class);
+    }
+    public function teacher()
+    {
+        return $this->belongsTo(User::class, 'teacher_id');
+    }
+    public function sections()
+    {
+        return $this->hasMany(CourseSection::class)->orderBy('position');
     }
 }
