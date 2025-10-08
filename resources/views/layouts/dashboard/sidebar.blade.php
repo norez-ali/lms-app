@@ -51,7 +51,8 @@
                   </div>
 
                   <div class="sidebar__item">
-                      <a href="dshb-listing.html" class="control-dshb d-flex items-center text-17 lh-1 fw-500">
+                      <a href="{{ route('admin.courses') }}"
+                          class="control-dshb d-flex items-center text-17 lh-1 fw-500">
                           <i class="text-20 icon-list mr-15"></i>
                           Create Course
                       </a>
