@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Admin\Course;
 use App\Models\Education;
 use App\Models\Experience;
+use App\Models\CourseTeacherRequest;
 use App\Models\Profile;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -66,5 +67,9 @@ class User extends Authenticatable
     public function courses()
     {
         return $this->hasMany(Course::class);
+    }
+    public function courseRequests()
+    {
+        return $this->hasMany(CourseTeacherRequest::class, 'teacher_id');
     }
 }

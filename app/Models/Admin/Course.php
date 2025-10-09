@@ -3,7 +3,10 @@
 namespace App\Models\Admin;
 
 use App\Models\Admin\Category;
+use App\Models\Admin\CourseSection;
+
 use App\Models\User;
+use App\Models\CourseTeacherRequest;
 use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
@@ -38,5 +41,9 @@ class Course extends Model
     public function sections()
     {
         return $this->hasMany(CourseSection::class)->orderBy('position');
+    }
+    public function teacherRequests()
+    {
+        return $this->hasMany(CourseTeacherRequest::class);
     }
 }

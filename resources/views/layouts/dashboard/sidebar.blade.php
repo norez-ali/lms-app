@@ -29,35 +29,43 @@
                       <div class="sidebar__item">
                           <a href="{{ route('admin.categories') }}"
                               class="control-dshb d-flex items-center text-17 lh-1 fw-500">
-                              <img src="{{ asset('assets/categories.png') }}" alt=""
-                                  class="w-5 mr-15 text-blue-300">
-                              Manage Categories
+                              <i class="far fa-folder text-20 mr-15"></i>
+                              Manage Cate gories
                           </a>
                       </div>
                   @endif
-
-                  <div class="sidebar__item">
-                      <a href="#" class="control-dshb d-flex items-center text-17 lh-1 fw-500">
-                          <i class="text-20 icon-bookmark mr-15"></i>
-                          Bookmarks
-                      </a>
-                  </div>
-
+                  @if (auth()->user()->role === 'admin')
+                      <div class="sidebar__item">
+                          <a href="#" class="control-dshb d-flex items-center text-17 lh-1 fw-500">
+                              <i class="far fa-user text-20 mr-15"></i>
+                              Manage Users
+                          </a>
+                      </div>
+                  @endif
                   <div class="sidebar__item">
                       <a href="dshb-messages.html" class="control-dshb d-flex items-center text-17 lh-1 fw-500">
                           <i class="text-20 icon-message mr-15"></i>
                           Messages
                       </a>
                   </div>
-
-                  <div class="sidebar__item">
-                      <a href="{{ route('admin.courses') }}"
-                          class="control-dshb d-flex items-center text-17 lh-1 fw-500">
-                          <i class="text-20 icon-list mr-15"></i>
-                          Create Course
-                      </a>
-                  </div>
-
+                  @if (auth()->user()->role === 'admin')
+                      <div class="sidebar__item">
+                          <a href="{{ route('admin.courses') }}"
+                              class="control-dshb d-flex items-center text-17 lh-1 fw-500">
+                              <i class="text-20 icon-list mr-15"></i>
+                              Create Course
+                          </a>
+                      </div>
+                  @endif
+                  @if (auth()->user()->role === 'teacher')
+                      <div class="sidebar__item">
+                          <a href="{{ route('teacher.category.view') }}"
+                              class="control-dshb d-flex items-center text-17 lh-1 fw-500">
+                              <i class="text-20 icon-list mr-15"></i>
+                              Apply for Course
+                          </a>
+                      </div>
+                  @endif
                   <div class="sidebar__item">
                       <a href="dshb-reviews.html" class="control-dshb d-flex items-center text-17 lh-1 fw-500">
                           <i class="text-20 icon-comment mr-15"></i>

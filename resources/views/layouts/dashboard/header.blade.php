@@ -5,6 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com/" />
@@ -382,68 +383,16 @@
                                             class="toggle-bottom -profile bg-white -dark-bg-dark-1 shadow-4 border-light rounded-8 mt-10">
                                             <div class="px-30 py-30">
                                                 <div class="sidebar -dashboard">
-                                                    <div class="sidebar__item -is-active -dark-bg-dark-2">
-                                                        <a href="dashboard.html"
-                                                            class="d-flex items-center text-17 lh-1 fw-500 -dark-text-white">
-                                                            <i class="text-20 icon-discovery mr-15"></i>
-                                                            Dashboard
-                                                        </a>
-                                                    </div>
+
 
                                                     <div class="sidebar__item">
-                                                        <a href="dshb-courses.html"
-                                                            class="d-flex items-center text-17 lh-1 fw-500">
-                                                            <i class="text-20 icon-play-button mr-15"></i>
-                                                            My Courses
-                                                        </a>
-                                                    </div>
-
-                                                    <div class="sidebar__item">
-                                                        <a href="dshb-bookmarks.html"
-                                                            class="d-flex items-center text-17 lh-1 fw-500">
-                                                            <i class="text-20 icon-bookmark mr-15"></i>
-                                                            Bookmarks
-                                                        </a>
-                                                    </div>
-
-                                                    <div class="sidebar__item">
-                                                        <a href="dshb-messages.html"
-                                                            class="d-flex items-center text-17 lh-1 fw-500">
-                                                            <i class="text-20 icon-message mr-15"></i>
-                                                            Messages
-                                                        </a>
-                                                    </div>
-
-                                                    <div class="sidebar__item">
-                                                        <a href="dshb-listing.html"
-                                                            class="d-flex items-center text-17 lh-1 fw-500">
-                                                            <i class="text-20 icon-list mr-15"></i>
-                                                            Create Course
-                                                        </a>
-                                                    </div>
-
-                                                    <div class="sidebar__item">
-                                                        <a href="dshb-reviews.html"
-                                                            class="d-flex items-center text-17 lh-1 fw-500">
-                                                            <i class="text-20 icon-comment mr-15"></i>
-                                                            Reviews
-                                                        </a>
-                                                    </div>
-
-                                                    <div class="sidebar__item">
-                                                        <a href="dshb-settings.html"
-                                                            class="d-flex items-center text-17 lh-1 fw-500">
-                                                            <i class="text-20 icon-setting mr-15"></i>
-                                                            Settings
-                                                        </a>
-                                                    </div>
-
-                                                    <div class="sidebar__item">
-                                                        <a href="#"
-                                                            class="d-flex items-center text-17 lh-1 fw-500">
-                                                            <i class="text-20 icon-power mr-15"></i>
-                                                            Logout
-                                                        </a>
+                                                        <form method="POST" action="{{ route('logout') }}">
+                                                            @csrf
+                                                            <button type="submit" class="button -sm  text-dark-1 ">
+                                                                <i class="text-20 icon-power "></i>
+                                                                Logout
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>

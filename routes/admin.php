@@ -21,4 +21,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/edit/course/{courseId}', [CourseController::class, 'edit'])->name('admin.edit.course');
     Route::put('/update/courses/{courseId}', [CourseController::class, 'update'])->name('admin.update.course');
     Route::delete('/delete/courses/{courseId}', [CourseController::class, 'destroy'])->name('admin.delete.course');
+    //user management routes
+
 });

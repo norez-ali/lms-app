@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Education;
+use App\Models\Experience;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -142,7 +143,7 @@ class ProfileController extends Controller
         ]);
 
         // 🔁 Create or update teacher's experience
-        $experience = \App\Models\Experience::updateOrCreate(
+        $experience = Experience::updateOrCreate(
             ['user_id' => $user->id],
             $validated
         );

@@ -173,7 +173,7 @@
         $('.delete-course').on('submit', function(e) {
             e.preventDefault();
 
-            if (!confirm('Are you sure you want to delete this course?')) return;
+
 
             let form = $(this);
             let url = "{{ route('admin.delete.course', ':id') }}";

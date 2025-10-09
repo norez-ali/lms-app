@@ -1,19 +1,12 @@
 <div class="container-fluid">
     <div class="row pb-50 mb-10">
         <div class="col-auto">
-            <h1 class="text-30 lh-12 fw-700">Category Management</h1>
-            <div class="mt-10">Manage and Create Categories.</div>
+            <h1 class="text-30 lh-12 fw-700">Courses categories</h1>
+            <div class="mt-10">Browse categories to make application as Instructor.</div>
         </div>
     </div>
 
-    <div class="row y-gap-30 mb-30">
-        <div class="col-12 col-md-6">
-            <a href="{{ route('admin.add.category') }}"
-                class="control-dshb button -md -purple-1 text-white hover:opacity-90 transition-all">
-                <i class="icon-plus mr-10"></i> Add New Category
-            </a>
-        </div>
-    </div>
+
 
     <div class="row y-gap-30">
         @forelse ($categories as $category)
@@ -42,9 +35,9 @@
                     </span>
 
                     <!-- Manage Button (added more bottom space) -->
-                    <a href="{{ route('admin.edit.category', $category->id) }}"
+                    <a href="{{ route('teacher.view.courses', $category->id) }}"
                         class="control-dshb button -sm -outline-purple-1 text-purple-1 hover:bg-purple-1 hover:text-white transition-all w-100 mb-15">
-                        Manage Category
+                        Browse Courses
                     </a>
                 </div>
             </div>
