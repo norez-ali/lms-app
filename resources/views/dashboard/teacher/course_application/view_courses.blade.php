@@ -72,7 +72,6 @@
                     button.text('Withdraw Request')
                         .removeClass('-outline-purple-1 text-purple-1')
                         .addClass('bg-purple-1 text-white');
-                    alert('Course application submitted successfully!');
                 },
                 error: function(xhr) {
                     alert('Error: ' + xhr.responseText);

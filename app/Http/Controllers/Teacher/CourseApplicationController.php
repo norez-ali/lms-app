@@ -18,11 +18,20 @@ class CourseApplicationController extends Controller
     }
     public function viewCourses($categoryId)
     {
-        // Fetch the category with its name
         $category = Category::findOrFail($categoryId);
 
-        // Fetch all courses that belong to this category
-        $courses = Course::where('category_id', $categoryId)->get();
+        // Get the teacher's ID
+        $teacherId = auth()->id();
+
+        // Get IDs of courses this teacher has already applied for
+        $appliedCourseIds = CourseTeacherRequest::where('teacher_id', $teacherId)
+            ->pluck('course_id')
+            ->toArray();
+
+        // Get all courses in this category where the teacher has NOT applied
+        $courses = Course::where('category_id', $categoryId)
+            ->whereNotIn('id', $appliedCourseIds)
+            ->get();
         return view('dashboard.teacher.course_application.view_courses', get_defined_vars());
     }
     public function store(Request $request, $courseId)
