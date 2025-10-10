@@ -1,10 +1,19 @@
 <div class="container-fluid">
-    <div class="row pb-50 mb-10">
-        <div class="col-auto">
+    <div class="row pb-50 mb-10 align-items-center justify-content-between">
+        <div class="col">
             <h1 class="text-30 lh-12 fw-700">Courses categories</h1>
             <div class="mt-10">Browse categories to make application as Instructor.</div>
         </div>
+
+        <div class="col-auto">
+            <a href="{{ route('teacher.view.applications') }}"
+                class="control-dshb btn btn-primary px-20 py-10 rounded-8 fw-600 bg-purple-1 text-white">
+                My Applications
+            </a>
+        </div>
     </div>
+
+
 
 
 

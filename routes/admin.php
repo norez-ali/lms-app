@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CourseController;
+use App\Http\Controllers\Admin\TeacherRequestController;
 use Illuminate\Support\Facades\Route;
 
 // Admin routes
@@ -21,6 +22,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/edit/course/{courseId}', [CourseController::class, 'edit'])->name('admin.edit.course');
     Route::put('/update/courses/{courseId}', [CourseController::class, 'update'])->name('admin.update.course');
     Route::delete('/delete/courses/{courseId}', [CourseController::class, 'destroy'])->name('admin.delete.course');
-    //user management routes
-
+    //admin manages the applications from teachers
+    Route::get('view/applications', [TeacherRequestController::class, 'index'])->name('admin.view.applications');
+    Route::put('approve/application/{requestId}', [TeacherRequestController::class, 'approve'])->name('admin.approve.application');
+    Route::put('/reject/application/{requestId}', [TeacherRequestController::class, 'reject'])
+        ->name('admin.reject.application');
 });

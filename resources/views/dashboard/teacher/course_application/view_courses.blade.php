@@ -12,7 +12,7 @@
     <div class="row y-gap-30">
         @forelse ($courses as $course)
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-                <div class="bg-light-3 rounded-16 text-center p-30 shadow-sm d-flex flex-column align-items-center justify-content-between transition-all hover:shadow-md"
+                <div class="card bg-light-3 rounded-16 text-center p-30 shadow-sm d-flex flex-column align-items-center justify-content-between transition-all hover:shadow-md"
                     style="min-height: 320px; position: relative;">
 
                     <!-- Course Thumbnail -->
@@ -56,11 +56,12 @@
 <script>
     $(document).ready(function() {
         $('.request-course').on('click', function(e) {
-            e.preventDefault(); // ✅ Stop GET request
+            e.preventDefault(); // ✅ Stop the default anchor action
 
             let button = $(this);
             let url = button.attr('href');
-            let courseId = button.data('course-id');
+            let card = button.closest(
+            '.card, .col-xl-3, .col-lg-4, .col-md-6, .col-sm-12'); // ✅ parent card div
 
             $.ajax({
                 url: url,
@@ -68,13 +69,36 @@
                 data: {
                     _token: $('meta[name="csrf-token"]').attr('content')
                 },
+                beforeSend: function() {
+                    button.text('Processing...').prop('disabled', true);
+                },
                 success: function(response) {
-                    button.text('Withdraw Request')
-                        .removeClass('-outline-purple-1 text-purple-1')
-                        .addClass('bg-purple-1 text-white');
+                    // Fade out and remove the card
+                    card.fadeOut(600, function() {
+                        $(this).remove();
+                    });
+
+                    // Optional success alert
+                    $('body').append(`
+                    <div id="successMessage" class="fixed top-5 right-5 bg-green-500 text-white px-4 py-2 rounded shadow">
+                        ${response.message ?? 'Request sent successfully!'}
+                    </div>
+                `);
+
+                    // Redirect after short delay
+                    setTimeout(() => {
+                        $('#successMessage').fadeOut(400, function() {
+                            $(this).remove();
+                            window.location =
+                                "{{ route('teacher.dashboard') }}";
+                        });
+                    }, 1500);
                 },
                 error: function(xhr) {
                     alert('Error: ' + xhr.responseText);
+                },
+                complete: function() {
+                    button.text('Apply').prop('disabled', false);
                 }
             });
         });

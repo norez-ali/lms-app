@@ -30,7 +30,7 @@
                           <a href="{{ route('admin.categories') }}"
                               class="control-dshb d-flex items-center text-17 lh-1 fw-500">
                               <i class="far fa-folder text-20 mr-15"></i>
-                              Manage Cate gories
+                              Manage Categories
                           </a>
                       </div>
                   @endif
@@ -42,12 +42,22 @@
                           </a>
                       </div>
                   @endif
+                  @if (auth()->user()->role === 'admin')
+                      <div class="sidebar__item">
+                          <a href="{{ route('admin.view.applications') }}"
+                              class="control-dshb d-flex items-center text-17 lh-1 fw-500">
+                              <i class="far fa-file-alt text-20 mr-15"></i>
+                              Review Applications
+                          </a>
+                      </div>
+                  @endif
                   <div class="sidebar__item">
                       <a href="dshb-messages.html" class="control-dshb d-flex items-center text-17 lh-1 fw-500">
                           <i class="text-20 icon-message mr-15"></i>
                           Messages
                       </a>
                   </div>
+
                   @if (auth()->user()->role === 'admin')
                       <div class="sidebar__item">
                           <a href="{{ route('admin.courses') }}"
