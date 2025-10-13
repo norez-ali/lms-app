@@ -17,11 +17,12 @@
 
                   </div>
 
-                  @if (auth()->user()->role === 'student' || auth()->user()->role === 'teacher')
+                  @if (auth()->user()->role === 'teacher')
                       <div class="sidebar__item">
-                          <a href="dshb-courses.html" class="control-dshb d-flex items-center text-17 lh-1 fw-500">
+                          <a href=" {{ route('teacher.manage.courses') }} "
+                              class="control-dshb d-flex items-center text-17 lh-1 fw-500">
                               <i class="text-20 icon-play-button mr-15"></i>
-                              My Courses
+                              Manage Courses
                           </a>
                       </div>
                   @endif

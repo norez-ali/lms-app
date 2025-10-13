@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('section_id')->constrained('course_sections')->onDelete('cascade');
             $table->string('title');
-            $table->enum('type', ['video', 'article', 'quiz', 'file'])->default('video');
+            $table->enum('type', ['video', 'article', 'file'])->default('video');
             $table->text('content')->nullable();         // for article/text
             $table->string('video_url')->nullable();     // external link
             $table->string('file_path')->nullable();     // uploaded file
-            $table->integer('position')->default(0);
+
             $table->timestamps();
         });
     }

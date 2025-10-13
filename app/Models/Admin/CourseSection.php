@@ -9,10 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class CourseSection extends Model
 {
-    protected $fillable = ['course_id', 'title', 'position'];
+    protected $fillable = ['course_id', 'title'];
     public function lessons()
     {
-        return $this->hasMany(CourseLesson::class)->orderBy('position');
+        return $this->hasMany(CourseLesson::class);
     }
     public function course()
     {

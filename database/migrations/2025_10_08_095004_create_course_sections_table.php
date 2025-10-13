@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('course_sections', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('course_id')->constrained()->onDelete('cascade');
-            $table->string('title');
-            $table->integer('position')->default(0);
+            $table->string('title')->nullable();
+
             $table->timestamps();
         });
     }

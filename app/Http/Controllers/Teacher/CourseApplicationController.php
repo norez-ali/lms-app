@@ -20,32 +20,30 @@ class CourseApplicationController extends Controller
     {
         $category = Category::findOrFail($categoryId);
 
-        // Get the teacher's ID
+        // Authenticated teacher
         $teacherId = auth()->id();
 
-        // Get all applications for this teacher
+        // All applications by this teacher
         $applications = CourseTeacherRequest::where('teacher_id', $teacherId)->get();
 
-        // Get IDs of pending courses (we want to exclude these)
-        $pendingCourseIds = $applications
-            ->where('status', 'pending')
-            ->pluck('course_id')
-            ->toArray();
+        // All course IDs the teacher applied for
+        $appliedCourseIds = $applications->pluck('course_id')->toArray();
 
-        // Get IDs of rejected courses (we will include these)
+        // Rejected course IDs
         $rejectedCourseIds = $applications
             ->where('status', 'rejected')
             ->pluck('course_id')
             ->toArray();
 
-        // Fetch courses in this category
+        // Fetch courses for this category
         $courses = Course::where('category_id', $categoryId)
-            ->where(function ($query) use ($pendingCourseIds, $rejectedCourseIds) {
-                $query->whereNotIn('id', $pendingCourseIds)
-                    ->orWhereIn('id', $rejectedCourseIds);
+            ->where(function ($query) use ($appliedCourseIds, $rejectedCourseIds) {
+                $query->whereNotIn('id', $appliedCourseIds) // not applied at all
+                    ->orWhereIn('id', $rejectedCourseIds); // or rejected
             })
             ->with('category')
             ->get();
+
         return view('dashboard.teacher.course_application.view_courses', get_defined_vars());
     }
 

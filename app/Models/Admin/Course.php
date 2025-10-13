@@ -40,7 +40,7 @@ class Course extends Model
     }
     public function sections()
     {
-        return $this->hasMany(CourseSection::class)->orderBy('position');
+        return $this->hasMany(CourseSection::class);
     }
     public function teacherRequests()
     {
