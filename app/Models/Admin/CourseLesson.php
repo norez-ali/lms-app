@@ -15,7 +15,7 @@ class CourseLesson extends Model
         'content',
         'video_url',
         'file_path',
-        'position'
+
     ];
     public function section()
     {

@@ -17,6 +17,10 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->group(function (
     //Routes for managing the courses assigned to the teacher
     Route::get('/manage/courses', [ManageCourseController::class, 'index'])->name('teacher.manage.courses');
     Route::get('/edit/course/{id}', [ManageCourseController::class, 'edit'])->name('teacher.edit.course');
+    //adding section to the course
     Route::post('/add/section/{id}', [ManageCourseController::class, 'addSection'])->name('teacher.add.section');
     Route::delete('/delete/section/{sectionId}', [ManageCourseController::class, 'deleteSection'])->name('teacher.delete.section');
+    //adding lesson to the course
+    Route::post('/add/lesson/{courseId}', [ManageCourseController::class, 'addLesson'])->name('teacher.add.lesson');
+    Route::delete('/delete/lesson/{lessonId}', [ManageCourseController::class, 'deleteLesson'])->name('teacher.lesson.delete');
 });

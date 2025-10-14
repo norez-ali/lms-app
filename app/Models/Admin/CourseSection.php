@@ -12,7 +12,7 @@ class CourseSection extends Model
     protected $fillable = ['course_id', 'title'];
     public function lessons()
     {
-        return $this->hasMany(CourseLesson::class);
+        return $this->hasMany(CourseLesson::class, 'section_id');
     }
     public function course()
     {
