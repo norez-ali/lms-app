@@ -219,92 +219,75 @@
             </div>
         </div>
 
-        <!-- Sections and Lessons -->
-        <div class="mt-10 border-t border-gray-200 pt-6">
-            <h3 class="text-xl font-semibold text-gray-900 mb-4">Course Sections</h3>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-10">
+            <!-- 📚 LEFT: Course Sections -->
+            <div class="lg:col-span-1 border rounded-xl bg-white shadow-sm p-4 overflow-y-auto max-h-[80vh]">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Course Sections</h3>
 
-            <div class="space-y-4">
-                <!-- Section 1 -->
-                @foreach ($course->sections as $section)
-                    <div class="border rounded-xl overflow-hidden section-item" data-id="{{ $section->id }}">
-                        <button
-                            class="w-full flex justify-between items-center bg-purple-50 text-purple-700 px-5 py-3 font-medium hover:bg-purple-100 transition section-toggle">
+                <div class="space-y-4">
+                    @foreach ($course->sections as $section)
+                        <div class="border rounded-xl overflow-hidden section-item" data-id="{{ $section->id }}">
+                            <button
+                                class="w-full flex justify-between items-center bg-purple-50 text-purple-700 px-5 py-3 font-medium hover:bg-purple-100 transition section-toggle">
 
-                            <span class="flex items-center gap-2">
-                                <i class="far fa-folder text-purple-600 text-lg"></i>
-                                {{ $section->title }}
-                            </span>
+                                <span class="flex items-center gap-2">
+                                    <i class="far fa-folder text-purple-600 text-lg"></i>
+                                    {{ $section->title }}
+                                </span>
 
-                            <div class="flex items-center gap-4">
-                                <!-- Delete icon -->
-                                <i class="fas fa-trash text-red-500 hover:text-red-700 cursor-pointer delete-section"
-                                    data-id="{{ $section->id }}" title="Delete Section"></i>
+                                <div class="flex items-center gap-4">
+                                    <!-- Delete icon -->
+                                    <i class="fas fa-trash text-red-500 hover:text-red-700 cursor-pointer delete-section"
+                                        data-id="{{ $section->id }}" title="Delete Section"></i>
 
-                                <!-- Dropdown arrow -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform"
-                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 9l-7 7-7-7" />
-                                </svg>
+                                    <!-- Dropdown arrow -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </div>
+                            </button>
+
+                            <!-- ✅ Collapsible container for lessons -->
+                            <div class="hidden bg-gray-50 p-5 text-sm text-gray-700">
+                                @if ($section->lessons->isNotEmpty())
+                                    <ul class="pl-6 space-y-2">
+                                        @foreach ($section->lessons as $lesson)
+                                            <li
+                                                class="relative flex items-center justify-between pl-4 pr-2 py-2 bg-white rounded-md border border-gray-200 hover:shadow-sm transition">
+                                                <div class="flex items-center gap-2">
+                                                    <span class="w-2 h-2 rounded-full bg-purple-600"></span>
+                                                    <a href="javascript:void(0);" class="lesson-item"
+                                                        data-id="{{ $lesson->id }}">
+                                                        <span class="font-semibold text-gray-800 text-sm">
+                                                            {{ $lesson->title }}
+                                                        </span>
+                                                    </a>
+                                                </div>
+
+                                                <i class="fas fa-trash text-red-500 hover:text-red-700 cursor-pointer delete-lesson"
+                                                    data-id="{{ $lesson->id }}" title="Delete Lesson"></i>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @else
+                                    <p class="text-gray-500 italic">No lessons added yet.</p>
+                                @endif
                             </div>
-                        </button>
-
-                        <!-- ✅ One collapsible container per section -->
-                        <div class="hidden bg-gray-50 p-5 text-sm text-gray-700">
-                            @if ($section->lessons->isNotEmpty())
-                                <ul class="pl-6 space-y-2">
-                                    @foreach ($section->lessons as $lesson)
-                                        <li
-                                            class="relative flex items-center justify-between pl-4 pr-2 py-2 bg-white rounded-md border border-gray-200 hover:shadow-sm transition">
-                                            <!-- Custom bullet + title -->
-                                            <div class="flex items-center gap-2">
-                                                <span class="w-2 h-2 rounded-full bg-purple-600"></span>
-                                                <span
-                                                    class="font-semibold text-gray-800 text-sm">{{ $lesson->title }}</span>
-                                            </div>
-
-                                            <!-- Delete icon -->
-                                            <i class="fas fa-trash text-red-500 hover:text-red-700 cursor-pointer delete-lesson"
-                                                data-id="{{ $lesson->id }}" title="Delete Lesson"></i>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            @else
-                                <p class="text-gray-500 italic">No lessons added yet.</p>
-                            @endif
                         </div>
-
-
-
-
-
-                    </div>
-                @endforeach
-
-
-
-                <!-- Section 2 -->
-                <div class="border rounded-xl overflow-hidden">
-                    <button
-                        class="w-full flex justify-between items-center bg-purple-50 text-purple-700 px-5 py-3 font-medium hover:bg-purple-100 transition section-toggle">
-                        Section 2: CSS Essentials
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
-
-                    <div class="hidden bg-gray-50 p-5 text-sm text-gray-700">
-                        <ul class="list-disc pl-5 space-y-1">
-                            <li>Lesson 1: Styling Basics</li>
-                            <li>Lesson 2: Flexbox Layout</li>
-                            <li>Quiz: CSS Selectors</li>
-                        </ul>
-                    </div>
+                    @endforeach
                 </div>
             </div>
+
+            <!-- 🧾 RIGHT: Lesson Viewer -->
+            <div id="lessonContent"
+                class="lg:col-span-2 bg-white border rounded-xl shadow-sm p-6 flex flex-col items-center justify-center text-gray-500 w-full min-h-[500px] max-h-[700px] overflow-y-auto transition-all duration-300">
+                <p class="text-lg">Select a lesson from the left to view its content.</p>
+            </div>
+
         </div>
+
     </div>
 </div>
 
@@ -610,5 +593,53 @@
             $('.container').prepend(alertBox);
             setTimeout(() => alertBox.fadeOut(500, () => alertBox.remove()), 4000);
         }
+    });
+    //    view lesson
+    $(document).on('click', '.lesson-item', function() {
+        const lessonId = $(this).data('id');
+        const lessonBox = $('#lessonContent');
+
+        // Loader
+        lessonBox.html(`
+        <div class="flex flex-col items-center justify-center text-gray-500 py-20">
+            <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-purple-600 mb-3"></div>
+            <p>Loading lesson content...</p>
+        </div>
+    `);
+
+        $.ajax({
+            url: `/teacher/view/lesson/${lessonId}`,
+            type: 'GET',
+            success: function(response) {
+                if (response.type === 'video') {
+                    lessonBox.html(`
+                    <video controls class="w-full h-[70vh] rounded-lg shadow-md">
+                        <source src="${response.video_url}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <h2 class="mt-4 text-xl font-semibold text-gray-800">${response.title}</h2>
+                    <p class="mt-2 text-gray-600">${response.content || ''}</p>
+                `);
+                } else if (response.type === 'file') {
+                    lessonBox.html(`
+                    <embed src="${response.file_path}" type="application/pdf" class="w-full h-[70vh] rounded-lg border" />
+                    <h2 class="mt-4 text-xl font-semibold text-gray-800">${response.title}</h2>
+                    <p class="mt-2 text-gray-600">${response.content || ''}</p>
+                `);
+                } else {
+                    lessonBox.html(`
+                    <h2 class="text-2xl font-semibold text-gray-800">${response.title}</h2>
+                    <p class="mt-4 text-gray-700 leading-relaxed">${response.content || 'No content available.'}</p>
+                `);
+                }
+            },
+            error: function() {
+                lessonBox.html(`
+                <div class="text-red-500 text-center py-10">
+                    <p>⚠️ Failed to load lesson content. Please try again.</p>
+                </div>
+            `);
+            }
+        });
     });
 </script>

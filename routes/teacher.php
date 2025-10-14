@@ -23,4 +23,5 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->group(function (
     //adding lesson to the course
     Route::post('/add/lesson/{courseId}', [ManageCourseController::class, 'addLesson'])->name('teacher.add.lesson');
     Route::delete('/delete/lesson/{lessonId}', [ManageCourseController::class, 'deleteLesson'])->name('teacher.lesson.delete');
+    Route::get('/view/lesson/{lessonId}', [ManageCourseController::class, 'viewLesson'])->name('teacher.view.lesson');
 });

@@ -146,4 +146,17 @@ class ManageCourseController extends Controller
             'message' => 'Lesson deleted successfully!',
         ]);
     }
+    public function viewLesson($id)
+    {
+        $lesson = CourseLesson::findOrFail($id);
+
+        return response()->json([
+            'id' => $lesson->id,
+            'title' => $lesson->title,
+            'content' => $lesson->content,
+            'type' => $lesson->type,
+            'video_url' => $lesson->video_url ? asset('storage/' . $lesson->video_url) : null,
+            'file_path' => $lesson->file_path ? asset('storage/' . $lesson->file_path) : null,
+        ]);
+    }
 }
