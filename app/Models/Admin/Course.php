@@ -7,6 +7,7 @@ use App\Models\Admin\CourseSection;
 
 use App\Models\User;
 use App\Models\CourseTeacherRequest;
+use App\Models\Teacher\Quiz;
 use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
@@ -45,5 +46,9 @@ class Course extends Model
     public function teacherRequests()
     {
         return $this->hasMany(CourseTeacherRequest::class);
+    }
+    public function quizzes()
+    {
+        return $this->hasMany(Quiz::class);
     }
 }

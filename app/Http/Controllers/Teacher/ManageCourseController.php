@@ -6,7 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\Course;
 use App\Models\Admin\CourseLesson;
 use App\Models\Admin\CourseSection;
+use App\Models\Teacher\Quiz;
+use App\Models\Teacher\QuizOption;
+use App\Models\Teacher\QuizQuestion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ManageCourseController extends Controller
@@ -158,5 +162,58 @@ class ManageCourseController extends Controller
             'video_url' => $lesson->video_url ? asset('storage/' . $lesson->video_url) : null,
             'file_path' => $lesson->file_path ? asset('storage/' . $lesson->file_path) : null,
         ]);
+    }
+    public function addQuiz(Request $request, $courseId)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'questions' => 'required|array|min:1',
+            'questions.*.question' => 'required|string',
+            'questions.*.options' => 'required|array|min:2',
+            'questions.*.options.*.option_text' => 'required|string',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            // Create the quiz
+            $quiz = Quiz::create([
+                'course_id' => $courseId,
+                'title' => $request->title,
+                'description' => $request->description,
+            ]);
+
+            // Loop through questions
+            foreach ($request->questions as $qData) {
+                $question = QuizQuestion::create([
+                    'quiz_id' => $quiz->id,
+                    'question' => $qData['question'],
+                    'marks' => 1,
+                ]);
+
+                // Loop through options
+                foreach ($qData['options'] as $optionData) {
+                    QuizOption::create([
+                        'question_id' => $question->id,
+                        'option_text' => $optionData['option_text'],
+                        'is_correct' => isset($optionData['is_correct']),
+                    ]);
+                }
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Quiz added successfully!',
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong: ' . $e->getMessage(),
+            ]);
+        }
     }
 }

@@ -24,4 +24,6 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->group(function (
     Route::post('/add/lesson/{courseId}', [ManageCourseController::class, 'addLesson'])->name('teacher.add.lesson');
     Route::delete('/delete/lesson/{lessonId}', [ManageCourseController::class, 'deleteLesson'])->name('teacher.lesson.delete');
     Route::get('/view/lesson/{lessonId}', [ManageCourseController::class, 'viewLesson'])->name('teacher.view.lesson');
+    //routes for adding quizzes
+    Route::post('/add/quiz/{courseId}', [ManageCourseController::class, 'addQuiz'])->name('teacher.add.quiz');
 });
