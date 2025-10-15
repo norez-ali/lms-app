@@ -329,86 +329,111 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-10">
-            <!-- 📚 LEFT: Course Sections -->
-            <div class="lg:col-span-1 border rounded-xl bg-white shadow-sm p-4 overflow-y-auto max-h-[80vh]">
-                <h3 class="text-xl font-semibold text-gray-900 mb-4">Course Sections</h3>
+        <div class="container mx-auto px-6 py-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- 📚 LEFT: Course Sections + Quizzes -->
+                <div class="lg:col-span-1 border rounded-xl bg-white shadow-sm p-4 overflow-y-auto max-h-[80vh]">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Course Sections</h3>
 
-                <div class="space-y-4">
-                    @foreach ($course->sections as $section)
-                        <div class="border rounded-xl overflow-hidden section-item" data-id="{{ $section->id }}">
-                            <button
-                                class="w-full flex justify-between items-center bg-purple-50 text-purple-700 px-5 py-3 font-medium hover:bg-purple-100 transition section-toggle">
+                    <div class="space-y-4">
+                        @foreach ($course->sections as $section)
+                            <div class="border rounded-xl overflow-hidden section-item"
+                                data-id="{{ $section->id }}">
+                                <button
+                                    class="w-full flex justify-between items-center bg-purple-50 text-purple-700 px-5 py-3 font-medium hover:bg-purple-100 transition section-toggle">
+                                    <span class="flex items-center gap-2">
+                                        <i class="far fa-folder text-purple-600 text-lg"></i>
+                                        {{ $section->title }}
+                                    </span>
+                                    <div class="flex items-center gap-4">
+                                        <i class="fas fa-trash text-red-500 hover:text-red-700 cursor-pointer delete-section"
+                                            data-id="{{ $section->id }}" title="Delete Section"></i>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </div>
+                                </button>
 
-                                <span class="flex items-center gap-2">
-                                    <i class="far fa-folder text-purple-600 text-lg"></i>
-                                    {{ $section->title }}
-                                </span>
-
-                                <div class="flex items-center gap-4">
-                                    <!-- Delete icon -->
-                                    <i class="fas fa-trash text-red-500 hover:text-red-700 cursor-pointer delete-section"
-                                        data-id="{{ $section->id }}" title="Delete Section"></i>
-
-                                    <!-- Dropdown arrow -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform"
-                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 9l-7 7-7-7" />
-                                    </svg>
+                                <!-- ✅ Lessons -->
+                                <div class="hidden bg-gray-50 p-5 text-sm text-gray-700">
+                                    @if ($section->lessons->isNotEmpty())
+                                        <ul class="pl-6 space-y-2">
+                                            @foreach ($section->lessons as $lesson)
+                                                <li
+                                                    class="relative flex items-center justify-between pl-4 pr-2 py-2 bg-white rounded-md border border-gray-200 hover:shadow-sm transition">
+                                                    <div class="flex items-center gap-2">
+                                                        <span class="w-2 h-2 rounded-full bg-purple-600"></span>
+                                                        <a href="javascript:void(0);" class="lesson-item"
+                                                            data-id="{{ $lesson->id }}">
+                                                            <span class="font-semibold text-gray-800 text-sm">
+                                                                {{ $lesson->title }}
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                    <i class="fas fa-trash text-red-500 hover:text-red-700 cursor-pointer delete-lesson"
+                                                        data-id="{{ $lesson->id }}" title="Delete Lesson"></i>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <p class="text-gray-500 italic">No lessons added yet.</p>
+                                    @endif
                                 </div>
-                            </button>
-
-                            <!-- ✅ Collapsible container for lessons -->
-                            <div class="hidden bg-gray-50 p-5 text-sm text-gray-700">
-                                @if ($section->lessons->isNotEmpty())
-                                    <ul class="pl-6 space-y-2">
-                                        @foreach ($section->lessons as $lesson)
-                                            <li
-                                                class="relative flex items-center justify-between pl-4 pr-2 py-2 bg-white rounded-md border border-gray-200 hover:shadow-sm transition">
-                                                <div class="flex items-center gap-2">
-                                                    <span class="w-2 h-2 rounded-full bg-purple-600"></span>
-                                                    <a href="javascript:void(0);" class="lesson-item"
-                                                        data-id="{{ $lesson->id }}">
-                                                        <span class="font-semibold text-gray-800 text-sm">
-                                                            {{ $lesson->title }}
-                                                        </span>
-                                                    </a>
-                                                </div>
-
-                                                <i class="fas fa-trash text-red-500 hover:text-red-700 cursor-pointer delete-lesson"
-                                                    data-id="{{ $lesson->id }}" title="Delete Lesson"></i>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                @else
-                                    <p class="text-gray-500 italic">No lessons added yet.</p>
-                                @endif
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
+
+                    <!-- 🧠 Quizzes (same sidebar) -->
+                    <div class="mt-8 border-t pt-4">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Course Quizzes</h3>
+
+                        @if ($course->quizzes->isNotEmpty())
+                            <ul class="space-y-2">
+                                @foreach ($course->quizzes as $quiz)
+                                    <li
+                                        class="flex items-center justify-between px-4 py-2 bg-purple-50 border border-purple-200 rounded-md hover:bg-purple-100 transition">
+                                        <a href="javascript:void(0);" class="quiz-item text-purple-700 font-medium"
+                                            data-id="{{ $quiz->id }}">
+                                            <i class="fas fa-question-circle mr-2 text-purple-600"></i>
+                                            <a href="{{ route('teacher.view.quiz', $quiz->id) }}" class="get-quiz">
+                                                {{ $quiz->title }}
+                                            </a>
+                                        </a>
+                                        <i class="fas fa-trash text-red-500 hover:text-red-700 cursor-pointer delete-quiz"
+                                            data-id="{{ $quiz->id }}" title="Delete Quiz"></i>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-gray-500 italic">No quizzes added yet.</p>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- 🧾 RIGHT: Lesson or Quiz Viewer -->
+                <div id="lessonContent"
+                    class="lg:col-span-2 bg-white border rounded-xl shadow-sm p-6 flex flex-col items-center justify-center text-gray-500 w-full min-h-[500px] max-h-[700px] overflow-y-auto transition-all duration-300">
+                    <p class="text-lg">Select a lesson or quiz from the left to view its content.</p>
                 </div>
             </div>
-
-            <!-- 🧾 RIGHT: Lesson Viewer -->
-            <div id="lessonContent"
-                class="lg:col-span-2 bg-white border rounded-xl shadow-sm p-6 flex flex-col items-center justify-center text-gray-500 w-full min-h-[500px] max-h-[700px] overflow-y-auto transition-all duration-300">
-                <p class="text-lg">Select a lesson from the left to view its content.</p>
-            </div>
-
         </div>
+
 
     </div>
 </div>
 
 <!-- Simple dropdown toggle -->
 <script>
-    document.querySelectorAll('.section-toggle').forEach(button => {
-        button.addEventListener('click', () => {
-            const next = button.nextElementSibling;
-            next.classList.toggle('hidden');
-            const icon = button.querySelector('svg');
-            icon.classList.toggle('rotate-180');
+    $(document).ready(function() {
+        document.querySelectorAll('.section-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const next = button.nextElementSibling;
+                next.classList.toggle('hidden');
+                const icon = button.querySelector('svg');
+                icon.classList.toggle('rotate-180');
+            });
         });
     });
     $(document).ready(function() {
@@ -855,4 +880,111 @@
         $('.container').prepend(alertBox);
         setTimeout(() => alertBox.fadeOut(500, () => alertBox.remove()), 4000);
     }
+    //to show the quizzes
+    $(document).ready(function() {
+
+        $(document).on('click', '.get-quiz', function(e) {
+            e.preventDefault();
+
+            let url = $(this).attr('href');
+            let contentDiv = $('#lessonContent');
+
+            // Loader animation
+            contentDiv.html(`
+            <div class="flex flex-col items-center justify-center text-gray-500 py-10">
+                <div class="loader border-4 border-purple-200 border-t-purple-600 rounded-full w-10 h-10 animate-spin mb-3"></div>
+                <p>Loading quiz...</p>
+            </div>
+        `);
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(response) {
+                    if (response.success && response.quiz) {
+                        let quiz = response.quiz;
+
+                        let html = `
+                        <div class="w-full text-left">
+                            <h2 class="text-2xl font-bold text-purple-700 mb-4">${quiz.title}</h2>
+                            <p class="text-gray-600 mb-6">${quiz.description ?? ''}</p>
+                    `;
+
+                        if (quiz.questions.length > 0) {
+                            html += `<ul class="space-y-6">`;
+                            quiz.questions.forEach((question, index) => {
+                                html += `
+                                <li class="border rounded-lg p-4 bg-gray-50">
+                                    <h3 class="font-semibold text-gray-800 mb-2">
+                                        Q${index + 1}: ${question.question}
+                                    </h3>
+                                    <ul class="space-y-2 pl-4">`;
+
+                                question.options.forEach(option => {
+                                    html += `
+                                    <li class="flex items-center gap-2">
+                                        <input type="radio" name="q${question.id}" value="${option.id}" class="text-purple-600 focus:ring-purple-500">
+                                        <span>${option.option_text}</span>
+                                    </li>
+                                `;
+                                });
+
+                                html += `</ul></li>`;
+                            });
+                            html += `</ul>`;
+                        } else {
+                            html +=
+                                `<p class="text-gray-500 italic">No questions added yet.</p>`;
+                        }
+
+                        html += `</div>`;
+                        contentDiv.hide().html(html).fadeIn(300);
+
+                    } else {
+                        contentDiv.html(
+                            `<p class="text-red-600 p-4">Failed to load quiz data.</p>`);
+                    }
+                },
+                error: function(xhr) {
+                    console.error(xhr.responseText);
+                    $('#lessonContent').html(`
+                    <div class="text-red-600 p-4">
+                        Something went wrong while loading the quiz.
+                    </div>
+                `);
+                }
+            });
+        });
+
+    });
+    //delete the quiz
+
+    $(document).on('click', '.delete-quiz', function() {
+
+
+        let quizId = $(this).data('id');
+        let quizItem = $(this).closest('li');
+
+        $.ajax({
+            url: '/teacher/delete/quiz/' + quizId,
+            type: 'DELETE',
+            data: {
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                if (response.success) {
+                    quizItem.fadeOut(300, function() {
+                        $(this).remove();
+                    });
+
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function(xhr) {
+                console.error(xhr.responseText);
+                alert('Something went wrong!');
+            }
+        });
+    });
 </script>

@@ -25,7 +25,13 @@ class ManageCourseController extends Controller
     }
     public function edit($id)
     {
-        $course = Course::where('id', $id)->with('category', 'sections.lessons')->first();
+        $course = Course::where('id', $id)
+            ->with([
+                'category',
+                'sections.lessons',
+                'quizzes' // 👈 include quizzes
+            ])
+            ->first();
 
         return view('dashboard.teacher.manage_courses.edit', get_defined_vars());
     }
@@ -214,6 +220,32 @@ class ManageCourseController extends Controller
                 'success' => false,
                 'message' => 'Something went wrong: ' . $e->getMessage(),
             ]);
+        }
+    }
+    public function viewQuiz($quizId)
+    {
+        $quiz = Quiz::with('questions.options')->findOrFail($quizId);
+
+        return response()->json([
+            'success' => true,
+            'quiz' => $quiz
+        ]);
+    }
+    public function deleteQuiz($quizId)
+    {
+        try {
+            $quiz = Quiz::findOrFail($quizId);
+            $quiz->delete(); // This will cascade delete questions & options
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Quiz and all related questions/options deleted successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete quiz. ' . $e->getMessage()
+            ], 500);
         }
     }
 }

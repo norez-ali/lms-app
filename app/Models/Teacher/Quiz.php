@@ -23,4 +23,14 @@ class Quiz extends Model
     {
         return $this->hasMany(QuizQuestion::class);
     }
+    protected static function booted()
+    {
+        static::deleting(function ($quiz) {
+            // Delete related questions and options
+            foreach ($quiz->questions as $question) {
+                $question->options()->delete();
+            }
+            $quiz->questions()->delete();
+        });
+    }
 }
