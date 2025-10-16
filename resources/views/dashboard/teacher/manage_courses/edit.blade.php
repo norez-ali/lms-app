@@ -363,7 +363,7 @@
                                             @foreach ($section->lessons as $lesson)
                                                 <li
                                                     class="relative flex items-center justify-between pl-4 pr-2 py-2 bg-white rounded-md border border-gray-200 hover:shadow-sm transition">
-                                                    <div class="flex items-center gap-2">
+                                                    <div class="flex items-center gap-2 w-full">
                                                         <span class="w-2 h-2 rounded-full bg-purple-600"></span>
                                                         <a href="javascript:void(0);" class="lesson-item"
                                                             data-id="{{ $lesson->id }}">
@@ -426,16 +426,14 @@
 
 <!-- Simple dropdown toggle -->
 <script>
-    $(document).ready(function() {
-        document.querySelectorAll('.section-toggle').forEach(button => {
-            button.addEventListener('click', () => {
-                const next = button.nextElementSibling;
-                next.classList.toggle('hidden');
-                const icon = button.querySelector('svg');
-                icon.classList.toggle('rotate-180');
-            });
-        });
+    $(document).on('click', '.section-toggle', function() {
+        const next = $(this).next();
+        next.toggleClass('hidden');
+
+        const icon = $(this).find('svg');
+        icon.toggleClass('rotate-180');
     });
+
     $(document).ready(function() {
 
         // Open dialog

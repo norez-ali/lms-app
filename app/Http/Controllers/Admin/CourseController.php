@@ -33,6 +33,7 @@ class CourseController extends Controller
             'learning_outcomes'  => 'nullable|string',
             'requirements'       => 'nullable|string',
             'level'              => 'nullable|string',
+            'price'              => 'required|integer|min:0',
             'audio_language'     => 'nullable|string',
             'category_id'        => 'required|exists:categories,id',
             'thumbnail'          => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
@@ -48,6 +49,7 @@ class CourseController extends Controller
         $course = Course::create([
             'category_id'        => $request->category_id,
             'title'              => $request->title,
+            'price' => $request->price,
             'slug'               => Str::slug($request->title) . '-' . uniqid(),
             'short_description'  => $request->short_description,
             'description'        => $request->description,

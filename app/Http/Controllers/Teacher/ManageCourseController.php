@@ -18,7 +18,10 @@ class ManageCourseController extends Controller
     public function index()
     {
         $courses = Course::where('teacher_id', auth()->id())
-            ->with('category')
+            ->with([
+                'category',
+                'sections.lessons'
+            ])
             ->get();
 
         return view('dashboard.teacher.manage_courses.index', get_defined_vars());

@@ -15,7 +15,9 @@
                     {{-- Thumbnail --}}
                     <div class="relative w-full overflow-hidden bg-gray-100">
                         <img src="{{ $course->thumbnail ? asset('storage/' . $course->thumbnail) : asset('assets/img/coursesCards/1.png') }}"
-                            alt="Course Image" class="w-full h-auto transition-transform duration-300 hover:scale-105">
+                            alt="Course Image"
+                            class="w-full h-48 object-fit  rounded-lg shadow-sm transition-transform duration-300 hover:scale-105" />
+
                     </div>
 
 
@@ -23,7 +25,7 @@
                     <div class="p-4">
                         {{-- Rating and Created At --}}
                         <div class="flex items-center text-sm mb-2">
-                            <span class="text-yellow-500 font-semibold mr-1">★ 4.5</span>
+                            <span class="text-yellow-500 font-semibold mr-1">Uploaded</span>
                             <span class="text-gray-500">({{ $course->created_at->diffForHumans() }})</span>
                         </div>
 
@@ -39,16 +41,21 @@
 
                         {{-- Course Info --}}
                         <div class="flex flex-wrap gap-3 text-xs text-gray-500 mb-4">
-                            <div class="flex items-center gap-1"><i class="fa fa-play-circle text-primary"></i>6 Lessons
+                            <div class="flex items-center gap-1"><i
+                                    class="fa fa-play-circle text-primary"></i>{{ $course->sections->sum(fn($section) => $section->lessons->count()) ?: '0' }}
+                                Lessons
+
+
                             </div>
                             <div class="flex items-center gap-1"><i class="fa fa-clock text-primary"></i>3h 56m</div>
-                            <div class="flex items-center gap-1"><i class="fa fa-signal text-primary"></i>Beginner</div>
+                            <div class="flex items-center gap-1"><i
+                                    class="fa fa-signal text-primary"></i>{{ $course->level }}</div>
                         </div>
 
                         {{-- Footer --}}
                         <div class="flex justify-between items-center border-t border-gray-200 pt-3">
                             <div class="flex items-center gap-2">
-                                <img src="{{ $course->teacher->profile->profile_photo ? asset($course->teacher->profile->profile_photo) : asset('assets/img/general/avatar-1.png') }}"
+                                <img src="{{ $course->teacher->profile->profile_photo ? asset('storage/' . $course->teacher->profile->profile_photo) : asset('assets/img/general/avatar-1.png') }}"
                                     class="rounded-full w-8 h-8 object-cover" alt="Instructor">
                                 <span class="text-sm font-medium text-gray-800">
                                     {{ $course->teacher->name ?? 'Ali Tufan' }}
@@ -57,7 +64,7 @@
 
                             <div class="text-right">
 
-                                <div class="text-green-600 font-bold">PKR 79</div>
+                                <div class="text-green-600 font-bold">${{ $course->price }}</div>
                             </div>
                         </div>
                     </div>

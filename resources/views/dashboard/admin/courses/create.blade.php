@@ -60,6 +60,13 @@
                         <label class="text-16 lh-1 fw-500 text-dark-1 mb-10">Audio Language*</label>
                         <input type="text" name="audio_language" placeholder="e.g. English, Urdu">
                     </div>
+                    {{-- Course Price --}}
+                    <div class="col-md-6">
+                        <label class="text-16 lh-1 fw-500 text-dark-1 mb-10 block">Course Price (USD)*</label>
+                        <input type="number" name="price" id="price" placeholder="e.g. 29"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition duration-150 ease-in-out" />
+                    </div>
+
 
                     {{-- Course Category --}}
                     <div class="col-md-6">

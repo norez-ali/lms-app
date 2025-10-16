@@ -24,6 +24,7 @@ class Course extends Model
         'level',
         'audio_language',
         'thumbnail',
+        'price',
 
 
     ];
