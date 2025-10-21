@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/search-courses', [HomeController::class, 'search'])->name('courses.search');
+Route::get('/view/course/{id}', [HomeController::class, 'courseView'])->name('course.view');
+
 
 
 

@@ -358,7 +358,7 @@
                                     <div class="col-lg-3 col-md-6 flex justify-center">
                                         <div data-anim-child="slide-up delay-1">
 
-                                            <a href="courses-single-1.html"
+                                            <a href="{{ route('course.view', $course->id) }}"
                                                 class="coursesCard -type-1 block bg-white w-72 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border border-gray-100">
 
                                                 <!-- Thumbnail -->
@@ -438,7 +438,7 @@
                                     <div class="col-lg-3 col-md-6 flex justify-center">
                                         <div data-anim-child="slide-up delay-1">
 
-                                            <a href="courses-single-1.html"
+                                            <a href="{{ route('course.view', $course->id) }}"
                                                 class="coursesCard -type-1 block bg-white w-72 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border border-gray-100">
 
                                                 <!-- Thumbnail -->

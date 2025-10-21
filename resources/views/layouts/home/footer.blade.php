@@ -130,6 +130,45 @@
     crossorigin=""></script>
 <script src="{{ asset('assets/js/vendors.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
+<script>
+    $(document).ready(function() {
+
+        $('#courseSearch').on('keyup', function() {
+            let query = $(this).val();
+
+            $.ajax({
+                url: "{{ route('courses.search') }}",
+                method: 'GET',
+                data: {
+                    query: query
+                },
+                success: function(response) {
+                    let html = '';
+
+                    if (response.length > 0) {
+                        response.forEach(course => {
+                            // Assuming you have a route like: route('courses.show', $course->id)
+                            html += `
+                            <a href="/courses/${course.id}" class="text-dark-1 d-block">
+                                ${course.title}
+                            </a>
+                        `;
+                        });
+                    } else {
+                        html = `<p class="text-gray-500">No courses found.</p>`;
+                    }
+
+                    $('#coursesContainer').html(html);
+                },
+                error: function() {
+                    $('#coursesContainer').html(
+                        '<p class="text-red-500">Something went wrong. Try again.</p>');
+                }
+            });
+        });
+
+    });
+</script>
 
 @stack('scripts')
 </body>
