@@ -8,6 +8,7 @@ use App\Models\Experience;
 use App\Models\CourseTeacherRequest;
 use App\Models\Profile;
 use App\Models\Student\Cart;
+use App\Models\Student\Enrollment;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -75,5 +76,21 @@ class User extends Authenticatable
     public function cart()
     {
         return $this->hasMany(Cart::class);
+    }
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
+    public function enrolledCourses()
+    {
+        return $this->hasManyThrough(
+            Course::class,
+            Enrollment::class,
+            'user_id',   // Foreign key on enrollments table
+            'id',        // Local key on courses table
+            'id',        // Local key on users table
+            'course_id'  // Foreign key on enrollments table
+        );
     }
 }

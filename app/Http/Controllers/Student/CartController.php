@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Course;
+use App\Models\Student\Cart;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -53,6 +54,35 @@ class CartController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Course added to your cart successfully!'
+        ]);
+    }
+    public function viweCart()
+    {
+        $cartItems = Cart::where('user_id', auth()->id())
+            ->with('course') // eager load course details
+            ->get();
+        $total = $cartItems->sum(function ($item) {
+            return $item->course->price ?? 0;
+        });
+
+
+        return view('dashboard.student.cart.index', compact('cartItems', 'total'));
+    }
+    public function removeFromCart($id)
+    {
+        $cartItem = Cart::where('id', $id)
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if (!$cartItem) {
+            return response()->json(['success' => false, 'message' => 'Cart item not found.']);
+        }
+
+        $cartItem->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Course removed from cart successfully!',
         ]);
     }
 }

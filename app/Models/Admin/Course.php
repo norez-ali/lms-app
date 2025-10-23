@@ -7,6 +7,7 @@ use App\Models\Admin\CourseSection;
 
 use App\Models\User;
 use App\Models\CourseTeacherRequest;
+use App\Models\Student\Enrollment;
 use App\Models\Teacher\Quiz;
 use Illuminate\Database\Eloquent\Model;
 
@@ -51,5 +52,21 @@ class Course extends Model
     public function quizzes()
     {
         return $this->hasMany(Quiz::class);
+    }
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
+    public function students()
+    {
+        return $this->hasManyThrough(
+            User::class,
+            Enrollment::class,
+            'course_id',  // Foreign key on enrollments
+            'id',         // Local key on users
+            'id',         // Local key on courses
+            'user_id'     // Foreign key on enrollments
+        );
     }
 }

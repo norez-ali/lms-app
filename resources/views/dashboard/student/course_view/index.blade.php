@@ -6,19 +6,7 @@
                 <div class="breadcrumbs__content">
 
                     <div class="breadcrumbs__item ">
-                        <a href="#">Home</a>
-                    </div>
-
-                    <div class="breadcrumbs__item ">
-                        <a href="#">All courses</a>
-                    </div>
-
-                    <div class="breadcrumbs__item ">
-                        <a href="#">User Experience Design</a>
-                    </div>
-
-                    <div class="breadcrumbs__item ">
-                        <a href="#">User Interface</a>
+                        <a href="{{ url('/') }}">Home</a>
                     </div>
 
                 </div>

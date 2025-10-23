@@ -366,9 +366,10 @@
 
 
                                 <div class="relative ml-30 xl:ml-20">
-                                    <button class="d-flex items-center text-white" data-el-toggle=".js-cart-toggle">
+                                    <a class="d-flex items-center text-white"
+                                        href="{{ auth()->check() ? route('student.view.cart') : route('login') }}">
                                         <i class="text-20 icon icon-basket"></i>
-                                    </button>
+                                    </a>
 
                                     <div class="toggle-element js-cart-toggle">
                                         <div class="header-cart bg-white -dark-bg-dark-1 rounded-8">
