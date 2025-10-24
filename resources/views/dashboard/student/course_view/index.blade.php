@@ -86,8 +86,9 @@
 
                                 <button class="button -md -purple-1 text-white w-1/1 add-cart"
                                     data-id="{{ $course->id }}">Add To Cart</button>
-                                <button class="button -md -outline-dark-1 text-dark-1 w-1/1 mt-10">Buy
-                                    Now</button>
+                                <a href="{{ route('student.buy.checkout', $course->id) }}"
+                                    class="button -md -outline-dark-1 text-dark-1 w-1/1 mt-10">Buy
+                                    Now</a>
 
                                 <div class="text-14 lh-1 text-center mt-30">30-Day Money-Back Guarantee
                                 </div>
@@ -325,7 +326,9 @@
                         <div class="mt-30">
                             <div class="d-flex x-gap-20 y-gap-20 items-center flex-wrap ">
                                 <div class="size-120">
-                                    <img src="{{ $course->teacher->profile->profile_photo ? asset('storage/' . $course->teacher->profile->profile_photo) : asset('assets/img/misc/verified/1.png') }}"
+                                    <img src="{{ optional(optional($course->teacher)->profile)->profile_photo
+                                        ? asset('storage/' . optional(optional($course->teacher)->profile)->profile_photo)
+                                        : asset('assets/img/misc/verified/1.png') }}"
                                         alt="Teacher Photo" class="object-cover object-top"
                                         style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
 
@@ -334,8 +337,13 @@
                                 <div class="">
                                     <h5 class="text-17 lh-14 fw-500">{{ $course->teacher->name ?? 'Course Teacher' }}
                                     </h5>
+
                                     <p class="mt-5">
-                                        {{ optional($course->teacher->experiences->first())->title ?? 'President of Sales' }}
+                                        {{ $course->teacher?->experiences?->first()?->title ?? 'President of Sales' }}
+
+
+
+
 
                                     </p>
 
@@ -362,7 +370,9 @@
 
                             <div class="mt-30">
                                 <p>
-                                    {{ optional($course->teacher->experiences->first())->description ?? 'Course description that has been added by the teacher of the course, or the teacher has yet to be assigned to this course' }}
+                                    {{ $course->teacher?->experiences?->first()?->description ??
+                                        'Course description that has been added by the teacher of the course, or the teacher has yet to be assigned to this course' }}
+
 
                                 </p>
                             </div>

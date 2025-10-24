@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Course;
 use App\Models\Student\Cart;
+use App\Models\Student\Enrollment;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -23,6 +24,18 @@ class CartController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Only students can add courses to the cart.'
+            ]);
+        }
+
+
+        $enrolledCourse = Enrollment::where('user_id', $user->id)
+            ->where('course_id', $courseId)
+            ->first();
+
+        if ($enrolledCourse) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Already enrolled in this course'
             ]);
         }
 

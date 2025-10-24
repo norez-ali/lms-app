@@ -54,18 +54,18 @@
                             <span>Product</span>
                             <span>Subtotal</span>
                         </div>
-                        @foreach ($cartItems as $item)
-                            <div class="border-top-dark pt-15 d-flex justify-content-between text-grey mb-2">
-                                <span>{{ $item->course->title }}</span>
-                                <span>${{ $item->course->price }}</span>
-                            </div>
-                        @endforeach
+
+                        <div class="border-top-dark pt-15 d-flex justify-content-between text-grey mb-2">
+                            <span>{{ $course->title }}</span>
+                            <span>${{ $course->price }}</span>
+                        </div>
+
 
 
 
                         <div class="border-top-dark pt-15 d-flex justify-content-between fw-600 text-dark-1">
                             <span>Total</span>
-                            <span>${{ number_format($total, 2) }}</span>
+                            <span>${{ $course->price }}</span>
                         </div>
                     </div>
                     @if (session('error'))
@@ -91,7 +91,7 @@
 
                             </div>
                         </div>
-                        <form id="payment-form" action="{{ route('create.payment') }}" method="POST">
+                        <form id="payment-form" action="{{ route('buy.now', $course->id) }}" method="POST">
                             @csrf
                             <div id="card-element"
                                 class="text-16 lh-1 fw-500 text-dark-1 mb-10 border px-3 py-4 mt-4 rounded">
