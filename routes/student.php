@@ -3,6 +3,7 @@
 use App\Http\Controllers\Student\CartController;
 use App\Http\Controllers\Student\CheckoutController;
 use App\Http\Controllers\Student\PaymentController;
+use App\Http\Controllers\Student\QuizController;
 use App\Http\Controllers\Student\StudentDashboardController;
 use App\Models\Student\Payment;
 use Illuminate\Support\Facades\Route;
@@ -20,4 +21,9 @@ Route::middleware(['auth', 'role:student'])->prefix('student')->group(function (
     Route::post('/create-payment', [PaymentController::class, 'createPayment'])->name('create.payment');
     Route::get('checkout/buy/{courseId}', [PaymentController::class, 'buyNow'])->name('student.buy.checkout');
     Route::post('/buy-now/{courseId}', [PaymentController::class, 'buyNowCheck'])->name('buy.now');
+    //lectures and quizzes attempts routes
+    Route::get('/course/view/{courseId}', [StudentDashboardController::class, 'viewCourse'])->name('student.course.view');
+    Route::get('/lesson/view/{lessonId}', [StudentDashboardController::class, 'viewLesson'])->name('student.lesson.view');
+    Route::get('/quiz/view/{quizId}', [QuizController::class, 'viewQuiz'])->name('student.view.quiz');
+    Route::post('/quiz/{quiz}/submit', [QuizController::class, 'submit'])->name('student.submit.quiz');
 });

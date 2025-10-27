@@ -33,42 +33,52 @@
                                 <div class="tabs__pane -tab-item-1 is-active">
                                     <div class="row y-gap-30 pt-30">
                                         @forelse ($enrollments as $enrollment)
-                                            <div class="w-1/5 xl:w-1/3 lg:w-1/2 sm:w-1/1">
-                                                <div class="relative">
-                                                    <img class="rounded-8 w-1/1"
+                                            <a href="{{ route('student.course.view', $enrollment->course->id) }}"
+                                                class="control-dshb shadow-md rounded-xl hover:shadow-lg transition-shadow duration-300 block"
+                                                style="width: 19%; min-width: 250px; display: inline-block; vertical-align: top; height: 360px; margin: 0 0.5%; background: #fff; overflow: hidden;">
+
+                                                <div style="position: relative;">
+                                                    <img style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;"
                                                         src="{{ $enrollment->course->thumbnail ? asset('storage/' . $enrollment->course->thumbnail) : asset('assets/img/coursesCards/1.png') }}"
-                                                        alt="image">
+                                                        alt="Course Thumbnail">
                                                 </div>
 
-                                                <div class="pt-15">
-                                                    <div class="d-flex y-gap-10 justify-between items-center">
-                                                        <div class="text-14 lh-1">
+                                                <div
+                                                    style="padding: 12px 10px 10px 10px; display: flex; flex-direction: column; justify-content: space-between; height: 140px;">
+                                                    <div>
+                                                        <div style="font-size: 14px; line-height: 1; color: #555;">
                                                             {{ $enrollment->course->teacher->name ?? 'Course Teacher' }}
                                                         </div>
 
-
+                                                        <h3
+                                                            style="font-size: 16px; font-weight: 500; line-height: 1.3; margin-top: 10px; height: 38px; overflow: hidden;">
+                                                            {{ $enrollment->course->title }}
+                                                        </h3>
                                                     </div>
 
-                                                    <h3 class="text-16 fw-500 lh-15 mt-10">{{ $enrollment->course->title }}
-                                                    </h3>
+                                                    <div class="mt-10">
+                                                        <div class="progress-bar"
+                                                            style="height: 6px; background: #eee; border-radius: 3px; overflow: hidden;">
+                                                            <div class="progress-bar__bar"
+                                                                style="width: {{ $enrollment->progress }}%; height: 100%; background: #8b5cf6; transition: width 0.4s ease;">
+                                                            </div>
+                                                        </div>
 
-                                                    <div class="progress-bar mt-10">
-                                                        <div class="progress-bar__bg bg-light-3"></div>
-                                                        <div class="progress-bar__bar bg-purple-1 w-1/5">
+                                                        <div
+                                                            style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 13px; color: #333;">
+                                                            <div>{{ $enrollment->progress }}% Completed</div>
+                                                            <div>{{ $enrollment->progress }}%</div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="d-flex y-gap-10 justify-between items-center mt-10">
-                                                        <div class="text-dark-1">% 20 Completed</div>
-                                                        <div>25%</div>
-                                                    </div>
                                                 </div>
-                                            </div>
+                                            </a>
+
                                         @empty
                                             <p class="text-gray-500">You haven’t enrolled in any courses yet.</p>
                                         @endforelse
-
                                     </div>
+
 
                                     <div class="row justify-center pt-30">
                                         <div class="col-auto">
