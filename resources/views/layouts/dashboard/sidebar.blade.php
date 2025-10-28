@@ -37,7 +37,8 @@
                   @endif
                   @if (auth()->user()->role === 'admin')
                       <div class="sidebar__item">
-                          <a href="#" class="control-dshb d-flex items-center text-17 lh-1 fw-500">
+                          <a href="{{ route('admin.view.users') }}"
+                              class="control-dshb d-flex items-center text-17 lh-1 fw-500">
                               <i class="far fa-user text-20 mr-15"></i>
                               Manage Users
                           </a>
